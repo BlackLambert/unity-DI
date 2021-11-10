@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace SBaier.DI
 {
-    public interface Injectable
+    public interface Context
     {
-        void Inject(Resolver resolver);
+        public void Init(Resolver baseResolver);
     }
 }
+

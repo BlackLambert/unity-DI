@@ -14,7 +14,7 @@ namespace SBaier.DI.Example
             _bar = context.Resolve<Bar>();
             _baz = context.Resolve<Baz>();
             Debug.Log(_bar);
-            Debug.Log(_baz);
+            Debug.Log($"Baz with name {_baz.Name}");
         }
     }
 }

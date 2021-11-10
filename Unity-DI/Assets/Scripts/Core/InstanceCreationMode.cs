@@ -9,5 +9,7 @@ namespace SBaier.DI
         Undefined = 0,
         FromNew = 1,
         FromInstance = 2,
+        FromMethod = 4,
+        FromFactory = 8
     }
 }

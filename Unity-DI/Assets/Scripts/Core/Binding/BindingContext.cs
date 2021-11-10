@@ -2,32 +2,18 @@
 {
     public class BindingContext<TContract>
     {
-        private Binding _binding;
+        private readonly Binding _binding;
 
         public BindingContext(Binding binding)
         {
             _binding = binding;
         }
-
-        public BindingContext<TContract, TConcete> To<TConcete>() where TConcete : TContract
+        
+        public ToBindingContext<TContract, TConcrete> To<TConcrete>() where TConcrete : TContract, new()
         {
-            return new BindingContext<TContract, TConcete>(_binding);
-        }
-
-        public void FromInstance(TContract instance)
-        {
-            _binding.CreateInstance = () => instance;
+            return new ToBindingContext<TContract, TConcrete>(_binding);
         }
     }
 
-    public class BindingContext<TContract, TConcrete> where TConcrete : TContract
-    {
-        private Binding _binding;
-
-        public BindingContext(Binding binding)
-        {
-            _binding = binding;
-            _binding.ConcreteType = typeof(TConcrete);
-        }
-    }
+    
 }

@@ -5,26 +5,41 @@ using UnityEngine.SceneManagement;
 
 namespace SBaier.DI
 {
-    public class SceneContext : MonoBehaviour
+    public class SceneContext : MonoContext
     {
-        [SerializeField]
-        private MonoInstaller[] _installers;
+        private BasicDIContext _dIContext;
+        protected override DIContext DIContext => _dIContext;
 
-        private DIContext _dIContext;
         private SceneInjector _injector;
+        private Scene _scene;
 
         private void Awake()
         {
-            DIContainer container = new DIContainer();
-            _dIContext = new BasicDIContext(container);
-            GameObjectInjector injector = new GameObjectInjector();
-            _injector = new SceneInjector(injector);
+            Init(new Bootstrapper());
+        }
+        
+        protected override void DoInit(Resolver resolver)
+        {
+            _dIContext = resolver.Resolve<BasicDIContext>();
+            InstallSceneContextBindings();
+            ResolveDependencies();
+        }
 
-            foreach (Installer installer in _installers)
-                installer.InstallBindings(_dIContext);
+        private void InstallSceneContextBindings()
+        {
+            SceneContextInstaller installer = new SceneContextInstaller(gameObject, _dIContext);
+            installer.InstallBindings(_dIContext);
+        }
 
-            Scene scene = gameObject.scene;
-            _injector.InjectRootObjectsOf(scene, _dIContext);
+        private void ResolveDependencies()
+        {
+            _injector = _dIContext.Resolve<SceneInjector>();
+            _scene = _dIContext.Resolve<Scene>();
+        }
+
+        protected override void DoInjection()
+        {
+            _injector.InjectRootObjectsOf(_scene, _dIContext);
         }
     }
 }

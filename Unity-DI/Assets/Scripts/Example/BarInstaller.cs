@@ -11,8 +11,8 @@ namespace SBaier.DI
 
         public override void InstallBindings(Binder binder)
         {
-            binder.Bind<Bar>().FromInstance(new Bar());
-            binder.Bind<Baz>().FromInstance(_baz);
+            binder.BindToSelf<Bar>();
+            binder.BindToSelf<Baz>().FromInstance(_baz).AsSingle();
         }
     }
 }

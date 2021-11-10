@@ -4,13 +4,15 @@ using UnityEngine.SceneManagement;
 
 namespace SBaier.DI
 {
-    public class SceneInjector
+    public class SceneInjector : Injectable
     {
         private GameObjectInjector _injector;
 
-        public SceneInjector(GameObjectInjector injector)
+        public SceneInjector(){}
+
+        public void Inject(Resolver resolver)
         {
-            _injector = injector;
+            _injector = resolver.Resolve<GameObjectInjector>();
         }
 
         public void InjectRootObjectsOf(Scene scene, DIContext context)

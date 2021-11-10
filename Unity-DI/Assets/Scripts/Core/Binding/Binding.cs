@@ -12,6 +12,8 @@ namespace SBaier.DI
         public InstanceCreationMode CreationMode;
         public InstanceAmountMode AmountMode;
         public Func<object> CreateInstance;
+        public Type InstanceFactoryType;
+        public IComparable Id;
 
         public Binding(Type contractType)
         {
@@ -20,6 +22,8 @@ namespace SBaier.DI
             CreationMode = InstanceCreationMode.FromNew;
             AmountMode = InstanceAmountMode.PerRequest;
             CreateInstance = null;
+            InstanceFactoryType = null;
+            Id = default;
         }
 
         
