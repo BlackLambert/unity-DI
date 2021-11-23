@@ -19,7 +19,7 @@ namespace SBaier.DI
         { 
             GameObject[] sceneRootObjects = scene.GetRootGameObjects();
             foreach (GameObject rootObject in sceneRootObjects)
-                _injector.InjectIntoHierarchy(rootObject.transform, context);
+                _injector.InjectIntoContextHierarchy(rootObject.transform, context);
         }
     }
 }

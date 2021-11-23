@@ -19,6 +19,7 @@ namespace SBaier.DI
 
         protected override void DoInjection()
         {
+            Debug.Log($"{name} injecting into hierarchie");
             _injector.InjectIntoHierarchy(transform, _currentContext);
         }
     }

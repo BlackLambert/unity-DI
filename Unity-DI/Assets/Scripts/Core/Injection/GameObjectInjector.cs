@@ -15,7 +15,7 @@ namespace SBaier.DI
             InjectIntoChildren(root, context);
         }
 
-        private void InjectIntoContextHierarchy(Transform root, DIContext context)
+        public void InjectIntoContextHierarchy(Transform root, DIContext context)
         {
             GameObjectContext gameObjectContext = root.GetComponent<GameObjectContext>();
             if (gameObjectContext != null)
