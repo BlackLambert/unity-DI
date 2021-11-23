@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
-    public class ToBindingContext<TContract, TConcrete> where TConcrete : TContract, new()
+    public class ToBindingContext<TContract, TConcrete> where TConcrete : TContract
     {
         private Binding _binding;
 
@@ -13,27 +10,21 @@ namespace SBaier.DI
         {
             _binding = binding;
             _binding.ConcreteType = typeof(TConcrete);
-            _binding.CreateInstance = () => new TConcrete();
-        }
-
-        public FromBindingContext FromNew()
-        {
-            _binding.CreationMode = InstanceCreationMode.FromNew;
-            _binding.CreateInstance = () => new TConcrete();
-            return new FromBindingContext(_binding);
         }
         
-        public FromBindingContext FromInstance(TConcrete instance)
+        public AsBindingContext FromInstanceAsSingle(TConcrete instance)
         {
             _binding.CreationMode = InstanceCreationMode.FromInstance;
-            _binding.CreateInstance = () => instance;
-            return new FromBindingContext(_binding);
+            _binding.CreateInstanceFunction = () => instance;
+            _binding.InjectionAllowed = false;
+            _binding.AmountMode = InstanceAmountMode.Single;
+            return new AsBindingContext(_binding);
         }
 
-        public FromBindingContext FromMethod(Func<TConcrete> createMethod)
+        public FromBindingContext FromMethod(Func<TConcrete> create)
         {
             _binding.CreationMode = InstanceCreationMode.FromMethod;
-            _binding.CreateInstance = () => createMethod();
+            _binding.CreateInstanceFunction = () => create();
             return new FromBindingContext(_binding);
         }
 

@@ -19,14 +19,15 @@ namespace SBaier.DI
         
         public void InstallBindings(Binder binder)
         {
-            binder.BindToSelf<GameObjectInjector>();
-            binder.BindToSelf<SceneInjector>();
-            binder.BindToSelf<Scene>().FromInstance(_contextObject.scene).AsSingle();
-            binder.Bind<DIContext>().To<BasicDIContext>().FromInstance(_diContext).AsSingle();
-            binder.BindToSelf<DIInstanceFactory>();
+            binder.BindToNewSelf<GameObjectInjector>();
+            binder.BindToNewSelf<SceneInjector>();
+            binder.BindToSelf<Scene>().FromInstanceAsSingle(_contextObject.scene);
+            binder.BindToSelf<DIContext>().FromInstanceAsSingle(_diContext);
+            binder.BindToNewSelf<DIInstanceFactory>();
             binder.Bind<DIContainer>().To<DIContainer>().FromFactory<DIContainerFactory>();
-            binder.Bind<Factory<DIContainer>>().To<DIContainerFactory>();
-            binder.Bind<Factory<ChildDIContext>>().To<ChildDIContextFactory>();
+            binder.Bind<Factory<DIContainer>>().ToNew<DIContainerFactory>();
+            binder.Bind<Factory<ChildDIContext>>().ToNew<ChildDIContextFactory>();
+            new BindingValidationInstaller().InstallBindings(binder);
         }
     }
 }

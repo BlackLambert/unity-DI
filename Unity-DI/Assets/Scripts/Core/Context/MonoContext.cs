@@ -13,18 +13,27 @@ namespace SBaier.DI
         [FormerlySerializedAs("_installers")]
         private MonoInstaller[] _monoInstallers;
 
-        List<Installer> _installers = new();
+        private List<Installer> _installers = new();
         protected abstract DIContext DIContext { get; }
 
 
         public virtual void Init(Resolver baseResolver)
         {
             DoInit(baseResolver);
+            InjectIntoInstallers();
             InstallBindings(baseResolver);
+            DIContext.ValidateBindings();
             DoInjection();
         }
 
+		public void AddInstaller(Installer installer)
+        {
+            _installers.Add(installer);
+        }
+
         protected abstract void DoInit(Resolver resolver);
+
+        protected abstract void DoInjection();
 
         private void InstallBindings(Resolver resolver)
         {
@@ -45,12 +54,12 @@ namespace SBaier.DI
             installer.InstallBindings(DIContext);
         }
 
-        public void AddInstaller(Installer installer)
+        private void InjectIntoInstallers()
         {
-            _installers.Add(installer);
+            List<Installer> installers = GetAllInstallers();
+            foreach (Installer installer in installers)
+                (installer as Injectable)?.Inject(DIContext);
         }
-
-        protected abstract void DoInjection();
     }
 }
 

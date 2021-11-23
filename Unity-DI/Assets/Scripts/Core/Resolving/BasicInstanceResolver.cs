@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -18,6 +16,17 @@ namespace SBaier.DI
         {
             return (TContract) Instances[new BindingKey(typeof(TContract), iD)];
         }
-    }
+
+		public TContract ResolveOptional<TContract>()
+		{
+            return ResolveOptional<TContract>(default);
+        }
+
+		public TContract ResolveOptional<TContract>(IComparable iD)
+		{
+            BindingKey key = new BindingKey(typeof(TContract), iD);
+            return Instances.ContainsKey(key) ? (TContract)Instances[key] : default;
+        }
+	}
 }
 

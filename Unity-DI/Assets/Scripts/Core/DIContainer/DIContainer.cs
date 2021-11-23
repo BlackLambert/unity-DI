@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -34,6 +32,11 @@ namespace SBaier.DI
             return _bindings[key];
         }
 
+        public IEnumerable<Binding> GetBindings()
+		{
+            return _bindings.Values;
+		}
+
         public bool HasSingleInstanceOf<TContract>()
         {
             Type contract = typeof(TContract);
@@ -60,15 +63,20 @@ namespace SBaier.DI
             _singleInstances.Add(key, instance);
         }
 
+        public bool HasBinding(BindingKey key)
+		{
+            return _bindings.ContainsKey(key);
+        }
+
         private void ValidateBindingExists(BindingKey key)
         {
-            if (!_bindings.ContainsKey(key))
-                throw new MissingBindingException();
+            if (!HasBinding(key))
+                throw new MissingBindingException($"There is no Binding for Contract {key.Type}");
         }
 
         private void ValidateNotBound(BindingKey key)
         {
-            if (_bindings.ContainsKey(key))
+            if (HasBinding(key))
                 throw new AlreadyBoundException();
         }
 

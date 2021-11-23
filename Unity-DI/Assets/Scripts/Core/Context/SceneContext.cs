@@ -22,6 +22,7 @@ namespace SBaier.DI
         {
             _dIContext = resolver.Resolve<BasicDIContext>();
             InstallSceneContextBindings();
+            DIContext.ValidateBindings();
             ResolveDependencies();
         }
 

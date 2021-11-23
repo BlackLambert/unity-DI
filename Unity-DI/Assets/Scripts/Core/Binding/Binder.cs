@@ -3,6 +3,7 @@
     public interface Binder
     {
         public BindingContext<TContract> Bind<TContract>();
-        public ToBindingContext<TContract, TContract> BindToSelf<TContract>() where TContract : new();
+        public ToBindingContext<TContract, TContract> BindToSelf<TContract>();
+        public FromNewBindingContext<TContract> BindToNewSelf<TContract>() where TContract : new();
     }
 }

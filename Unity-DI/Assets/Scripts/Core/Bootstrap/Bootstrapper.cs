@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace SBaier.DI
 {
@@ -14,7 +10,7 @@ namespace SBaier.DI
         public Bootstrapper()
         {
             BasicDIContext context = new BasicDIContext();
-            context.Inject(new BasicDIContextDependencyResolver());
+            (context as Injectable).Inject(new BasicDIContextDependencyResolver());
             _instances.Add(new BindingKey(typeof(BasicDIContext), default), context);
         }
     }

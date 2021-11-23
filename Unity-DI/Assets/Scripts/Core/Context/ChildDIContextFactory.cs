@@ -17,7 +17,7 @@ namespace SBaier.DI
         public ChildDIContext Create()
         {
             ChildDIContext result = new ChildDIContext();
-            result.Inject(_dIContext);
+            (result as Injectable).Inject(_dIContext);
             return result;
         }
     }

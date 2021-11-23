@@ -8,6 +8,8 @@ namespace SBaier.DI
     {
         [SerializeField]
         private string _name = "Baz";
-        public string Name => _name;
-    }
+        public string Name => FromerBaz == null ? _name : $"{FromerBaz.Name}-{_name}";
+
+        public Baz FromerBaz { get; set; }
+	}
 }

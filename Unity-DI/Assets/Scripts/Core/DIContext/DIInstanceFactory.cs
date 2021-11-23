@@ -14,11 +14,12 @@ namespace  SBaier.DI
                 case InstanceCreationMode.FromNew:
                 case InstanceCreationMode.FromMethod:
                 case InstanceCreationMode.FromInstance:
-                    return (TInstance) binding.CreateInstance();
+                    return (TInstance) binding.CreateInstanceFunction();
                 case InstanceCreationMode.FromFactory:
                     return CreateByFactory<TInstance>(context);
                 case InstanceCreationMode.Undefined:
-                    throw new ArgumentException();
+                    throw new ArgumentException($"Creation of {typeof(TInstance)} failed. " +
+                        $"Can't create an instance with creation Mode {binding.CreationMode}");
                 default:
                     throw new NotImplementedException();
             }

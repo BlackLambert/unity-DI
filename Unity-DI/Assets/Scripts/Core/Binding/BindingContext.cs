@@ -9,9 +9,14 @@
             _binding = binding;
         }
         
-        public ToBindingContext<TContract, TConcrete> To<TConcrete>() where TConcrete : TContract, new()
+        public ToBindingContext<TContract, TConcrete> To<TConcrete>() where TConcrete : TContract
         {
             return new ToBindingContext<TContract, TConcrete>(_binding);
+        }
+
+        public FromNewBindingContext<TConcrete> ToNew<TConcrete>() where TConcrete : TContract, new()
+        {
+            return new FromNewBindingContext<TConcrete>(_binding);
         }
     }
 

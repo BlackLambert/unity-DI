@@ -4,7 +4,7 @@ using System;
 
 namespace SBaier.DI
 {
-    public class BasicDIContext : DIContextBase, Injectable
+    public class BasicDIContext : DIContextBase
     {
         public override BindingContext<TConcrete> Bind<TConcrete>()
         {

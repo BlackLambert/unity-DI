@@ -6,5 +6,7 @@ namespace SBaier.DI
     {
         public TContract Resolve<TContract>();
         public TContract Resolve<TContract>(IComparable iD);
+        public TContract ResolveOptional<TContract>();
+        public TContract ResolveOptional<TContract>(IComparable iD);
     }
 }

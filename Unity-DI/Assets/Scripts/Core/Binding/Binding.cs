@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -11,21 +8,28 @@ namespace SBaier.DI
         public Type ConcreteType;
         public InstanceCreationMode CreationMode;
         public InstanceAmountMode AmountMode;
-        public Func<object> CreateInstance;
+        public Func<object> CreateInstanceFunction;
         public Type InstanceFactoryType;
         public IComparable Id;
+        public bool InjectionAllowed;
 
         public Binding(Type contractType)
         {
             ContractType = contractType;
             ConcreteType = contractType;
-            CreationMode = InstanceCreationMode.FromNew;
+            CreationMode = InstanceCreationMode.Undefined;
             AmountMode = InstanceAmountMode.PerRequest;
-            CreateInstance = null;
+            CreateInstanceFunction = null;
             InstanceFactoryType = null;
             Id = default;
+            InjectionAllowed = true;
         }
 
-        
-    }
+		public override string ToString()
+		{
+            return $"Binding (Contract: {ContractType} | Concrete: {ConcreteType} | CreationMode: {CreationMode} | " +
+                $" CreateInstanceFunction: {CreateInstanceFunction} | InstanceFactoryType: {null} | AmountMode: {AmountMode}" +
+                $" | ID: {Id} | InjectionAllowed: {InjectionAllowed})";
+		}
+	}
 }
