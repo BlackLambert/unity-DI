@@ -28,7 +28,7 @@ namespace SBaier.DI
 		public override string ToString()
 		{
             return $"Binding (Contract: {ContractType} | Concrete: {ConcreteType} | CreationMode: {CreationMode} | " +
-                $" CreateInstanceFunction: {CreateInstanceFunction} | InstanceFactoryType: {null} | AmountMode: {AmountMode}" +
+                $" CreateInstanceFunction: {CreateInstanceFunction} | InstanceFactoryType: {InstanceFactoryType} | AmountMode: {AmountMode}" +
                 $" | ID: {Id} | InjectionAllowed: {InjectionAllowed})";
 		}
 	}

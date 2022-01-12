@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -9,6 +6,12 @@ namespace SBaier.DI
     {
         public readonly Type Type { get; }
         public readonly IComparable ID { get; }
+
+        public BindingKey(Type contract)
+        {
+            Type = contract;
+            ID = null;
+        }
 
         public BindingKey(Type contract, IComparable iD)
         {
