@@ -6,9 +6,9 @@ namespace SBaier.DI
     public class SceneContextInstaller : Installer
     {
         private GameObject _contextObject;
-        private BasicDIContext _diContext;
+        private DIContext _diContext;
 
-        public SceneContextInstaller(GameObject contextObject, BasicDIContext dIContext)
+        public SceneContextInstaller(GameObject contextObject, DIContext dIContext)
         {
             _contextObject = contextObject;
             _diContext = dIContext;
@@ -16,15 +16,9 @@ namespace SBaier.DI
         
         public void InstallBindings(Binder binder)
         {
-            binder.BindToNewSelf<GameObjectInjector>();
-            binder.BindToNewSelf<SceneInjector>();
             binder.BindToSelf<Scene>().FromInstanceAsSingle(_contextObject.scene);
             binder.BindToSelf<DIContext>().FromInstanceAsSingle(_diContext);
-            binder.BindToNewSelf<DIInstanceFactory>();
-            binder.Bind<DIContainer>().To<DIContainer>().FromFactory();
-            binder.Bind<Factory<DIContainer>>().ToNew<DIContainerFactory>();
             binder.Bind<Factory<ChildDIContext>>().ToNew<ChildDIContextFactory>();
-            new BindingValidationInstaller().InstallBindings(binder);
         }
     }
 }

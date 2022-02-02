@@ -4,22 +4,18 @@ namespace SBaier.DI
 {
     public class SceneContext : MonoContext
     {
-        private BasicDIContext _dIContext;
+        private ChildDIContext _dIContext;
         protected override DIContext DIContext => _dIContext;
 
         private SceneInjector _injector;
         private Scene _scene;
-
-        private void Awake()
-        {
-            Init(new Bootstrapper().Resolver);
-        }
         
         protected override void DoInit(Resolver resolver)
         {
-            _dIContext = resolver.Resolve<BasicDIContext>();
+            Factory<ChildDIContext> contextFactory = resolver.Resolve<Factory<ChildDIContext>>();
+            _dIContext = contextFactory.Create();
             InstallSceneContextBindings();
-            DIContext.ValidateBindings();
+            _dIContext.ValidateBindings();
             ResolveDependencies();
         }
 
