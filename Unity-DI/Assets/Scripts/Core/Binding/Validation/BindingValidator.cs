@@ -1,3 +1,5 @@
+using System;
+
 namespace SBaier.DI
 {
     public class BindingValidator : Injectable
@@ -11,7 +13,14 @@ namespace SBaier.DI
 
 		public void Validate(Binding binding)
 		{
+            ValidateIsNotNull(binding);
             _fromValidator.Validate(binding);
         }
-    }
+
+		private void ValidateIsNotNull(Binding binding)
+		{
+			if (binding == null)
+				throw new ArgumentNullException();
+		}
+	}
 }

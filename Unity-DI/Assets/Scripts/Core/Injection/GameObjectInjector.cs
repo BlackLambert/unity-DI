@@ -7,41 +7,39 @@ namespace SBaier.DI
 {
     public class GameObjectInjector
     {
-        
-        
-        public void InjectIntoHierarchy(Transform root, DIContext context)
+        public void InjectIntoHierarchy(Transform root, Resolver resolver)
         {
-            InjectInto(root, context);
-            InjectIntoChildren(root, context);
+            InjectInto(root, resolver);
+            InjectIntoChildren(root, resolver);
         }
 
-        public void InjectIntoContextHierarchy(Transform root, DIContext context)
+        public void InjectIntoContextHierarchy(Transform root, Resolver resolver)
         {
             GameObjectContext gameObjectContext = root.GetComponent<GameObjectContext>();
             if (gameObjectContext != null)
-                gameObjectContext.Init(context);
+                gameObjectContext.Init(resolver);
             else
-                InjectIntoHierarchy(root, context);
+                InjectIntoHierarchy(root, resolver);
         }
 
-        private void InjectIntoChildren(Transform root, DIContext context)
+        private void InjectIntoChildren(Transform root, Resolver resolver)
         {
             foreach (Transform child in root)
-                InjectIntoContextHierarchy(child, context);
+                InjectIntoContextHierarchy(child, resolver);
         }
 
-        public void InjectInto(Transform root, DIContext context)
+        public void InjectInto(Transform root, Resolver resolver)
         {
             Injectable[] injectables = root.GetComponents<Injectable>();
             foreach (Injectable injectable in injectables)
-                InjectInto(injectable, context);
+                InjectInto(injectable, resolver);
         }
 
-        private void InjectInto(Injectable injectable, DIContext context)
+        private void InjectInto(Injectable injectable, Resolver resolver)
         {
             if (injectable is Installer)
                 return;
-            injectable.Inject(context);
+            injectable.Inject(resolver);
         }
     }
 }

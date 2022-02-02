@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SBaier.DI
 {
@@ -9,9 +10,9 @@ namespace SBaier.DI
         public InstanceCreationMode CreationMode;
         public InstanceAmountMode AmountMode;
         public Func<object> CreateInstanceFunction;
-        public Type InstanceFactoryType;
-        public IComparable Id;
         public bool InjectionAllowed;
+        public Dictionary<BindingKey, object> Arguments { get; } =
+            new Dictionary<BindingKey, object>();
 
         public Binding(Type contractType)
         {
@@ -20,16 +21,18 @@ namespace SBaier.DI
             CreationMode = InstanceCreationMode.Undefined;
             AmountMode = InstanceAmountMode.PerRequest;
             CreateInstanceFunction = null;
-            InstanceFactoryType = null;
-            Id = default;
             InjectionAllowed = true;
         }
 
 		public override string ToString()
 		{
-            return $"Binding (Contract: {ContractType} | Concrete: {ConcreteType} | CreationMode: {CreationMode} | " +
-                $" CreateInstanceFunction: {CreateInstanceFunction} | InstanceFactoryType: {InstanceFactoryType} | AmountMode: {AmountMode}" +
-                $" | ID: {Id} | InjectionAllowed: {InjectionAllowed})";
+            return $"Binding (Contract: {ContractType} | " +
+                $"Concrete: {ConcreteType} | " +
+                $"CreationMode: {CreationMode} | " +
+                $"CreateInstanceFunction: {CreateInstanceFunction} | " +
+                $"AmountMode: {AmountMode} | " +
+                $"InjectionAllowed: {InjectionAllowed})" +
+                $"Arguments: {Arguments}";
 		}
 	}
 }

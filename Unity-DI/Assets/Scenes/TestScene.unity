@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 60658908}
   - component: {fileID: 60658909}
+  - component: {fileID: 60658910}
   m_Layer: 0
   m_Name: Foo3
   m_TagString: Untagged
@@ -240,6 +241,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7085549d6e6e32e47bfaabc72321e132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &60658910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60658907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b94339004f618d44accc98d277405c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &200563292
@@ -471,6 +484,7 @@ GameObject:
   - component: {fileID: 1035028242}
   - component: {fileID: 1035028241}
   - component: {fileID: 1035028240}
+  - component: {fileID: 1035028243}
   m_Layer: 0
   m_Name: GOContext2
   m_TagString: Untagged
@@ -534,6 +548,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _monoInstallers:
   - {fileID: 1035028241}
+  - {fileID: 1035028243}
+--- !u!114 &1035028243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035028238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653dab8a494ff3748ade4eb81d4a7963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blaPrefab: {fileID: 5830224564328273995, guid: c58c3bacaaff34647aa18de30c18a6a3, type: 3}
 --- !u!1 &1522879155
 GameObject:
   m_ObjectHideFlags: 0

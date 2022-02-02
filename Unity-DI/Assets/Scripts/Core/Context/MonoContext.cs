@@ -13,7 +13,7 @@ namespace SBaier.DI
         [FormerlySerializedAs("_installers")]
         private MonoInstaller[] _monoInstallers;
 
-        private List<Installer> _installers = new();
+        private List<Installer> _installers = new List<Installer>();
         protected abstract DIContext DIContext { get; }
 
 

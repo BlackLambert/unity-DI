@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBaier.DI
+namespace SBaier.DI.Examples
 {
     public class Bar: Injectable
     {

@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -14,9 +11,11 @@ namespace SBaier.DI
             _binding = binding;
         }
 
-        public void WithID(IComparable iD)
+        public AsBindingContext WithArgument<TArg>(TArg argument, IComparable iD = default)
         {
-            _binding.Id = iD;
+            BindingKey key = new BindingKey(typeof(TArg), iD);
+            _binding.Arguments.Add(key, argument);
+            return this;
         }
     }
 }

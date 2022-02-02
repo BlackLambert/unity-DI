@@ -10,16 +10,11 @@ namespace SBaier.DI
             _baseContext = resolver.Resolve<DIContext>();
         }
 
-		public override BindingContext<TContract> Bind<TContract>()
-        {
-            return BindToContainer<TContract>();
-        }
-
         protected override TContract Resolve<TContract>(BindingKey key)
         {
             try
             {
-                return ResolveFromContainer<TContract>(key);
+                return base.Resolve<TContract>(key);
             }
             catch(MissingBindingException)
             {

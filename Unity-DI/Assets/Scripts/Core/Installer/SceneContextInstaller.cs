@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +21,7 @@ namespace SBaier.DI
             binder.BindToSelf<Scene>().FromInstanceAsSingle(_contextObject.scene);
             binder.BindToSelf<DIContext>().FromInstanceAsSingle(_diContext);
             binder.BindToNewSelf<DIInstanceFactory>();
-            binder.Bind<DIContainer>().To<DIContainer>().FromFactory<DIContainerFactory>();
+            binder.Bind<DIContainer>().To<DIContainer>().FromFactory();
             binder.Bind<Factory<DIContainer>>().ToNew<DIContainerFactory>();
             binder.Bind<Factory<ChildDIContext>>().ToNew<ChildDIContextFactory>();
             new BindingValidationInstaller().InstallBindings(binder);

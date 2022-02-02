@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SBaier.DI
+namespace SBaier.DI.Examples
 {
     public class BarInstaller : MonoInstaller, Injectable
     {

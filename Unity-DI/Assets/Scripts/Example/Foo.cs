@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SBaier.DI.Example
+namespace SBaier.DI.Examples
 {
     public class Foo : MonoBehaviour, Injectable
     {
@@ -13,8 +13,8 @@ namespace SBaier.DI.Example
         {
             _bar = context.Resolve<Bar>();
             _baz = context.Resolve<Baz>();
-            Debug.Log(_bar);
-            Debug.Log($"Baz with name {_baz.Name}");
+            Debug.Log($"Foo: Bar {_bar}");
+            Debug.Log($"Foo: Baz with name {_baz.Name}");
         }
     }
 }

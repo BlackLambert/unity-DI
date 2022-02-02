@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace SBaier.DI
 {
     public interface Factory
@@ -9,9 +5,14 @@ namespace SBaier.DI
         
     }
     
-    public interface Factory<out T> : Factory
+    public interface Factory<out TInstance> : Factory
     {
-        public T Create();
+        public TInstance Create();
+    }
+    
+    public interface Factory<out TInstance, in TArg> : Factory
+    {
+        public TInstance Create(TArg arg);
     }
 }
 

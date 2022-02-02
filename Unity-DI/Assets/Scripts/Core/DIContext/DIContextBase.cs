@@ -14,16 +14,26 @@ namespace SBaier.DI
             DoInject(resolver);
         }
 
-        public abstract BindingContext<TContract> Bind<TContract>();
-
-        public ToBindingContext<TContract, TContract> BindToSelf<TContract>()
+        protected virtual void DoInject(Resolver resolver)
         {
-            return Bind<TContract>().To<TContract>();
+            _container = resolver.Resolve<DIContainer>();
+            _instanceFactory = resolver.Resolve<DIInstanceFactory>();
+            _bindingValidator = resolver.Resolve<BindingValidator>();
         }
 
-        public FromNewBindingContext<TContract> BindToNewSelf<TContract>() where TContract : new()
+        public BindingContext<TContract> Bind<TContract>(IComparable iD = default)
+		{
+            return BindToContainer<TContract>(iD);
+		}
+
+        public ToBindingContext<TContract, TContract> BindToSelf<TContract>(IComparable iD = default)
         {
-            return Bind<TContract>().ToNew<TContract>();
+            return Bind<TContract>(iD).To<TContract>();
+        }
+
+        public FromNewBindingContext<TContract> BindToNewSelf<TContract>(IComparable iD = default) where TContract : new()
+        {
+            return Bind<TContract>(iD).ToNew<TContract>();
         }
 
         public TContract Resolve<TContract>()
@@ -33,7 +43,8 @@ namespace SBaier.DI
 
         public TContract Resolve<TContract>(IComparable iD)
         {
-            return Resolve<TContract>(new BindingKey(typeof(TContract), iD));
+            BindingKey key = CreateKey<TContract>(iD);
+            return Resolve<TContract>(key);
         }
 
         public TContract ResolveOptional<TContract>()
@@ -43,7 +54,7 @@ namespace SBaier.DI
 
         public TContract ResolveOptional<TContract>(IComparable iD)
         {
-            BindingKey key = new BindingKey(typeof(TContract), iD);
+            BindingKey key = CreateKey<TContract>(iD);
             return _container.HasBinding(key) ? Resolve<TContract>(iD) : default;
         }
 
@@ -54,21 +65,18 @@ namespace SBaier.DI
                 _bindingValidator.Validate(binding);
         }
 
-        protected virtual void DoInject(Resolver resolver)
-        {
-            _container = resolver.Resolve<DIContainer>();
-            _instanceFactory = resolver.Resolve<DIInstanceFactory>();
-            _bindingValidator = resolver.Resolve<BindingValidator>();
+        protected virtual TContract Resolve<TContract>(BindingKey key)
+		{
+            return ResolveFromContainer<TContract>(key);
         }
 
-        protected abstract TContract Resolve<TContract>(BindingKey key);
-
-        protected BindingContext<TConcrete> BindToContainer<TConcrete>()
+        protected BindingContext<TContract> BindToContainer<TContract>(IComparable iD)
         {
-            Type contractType = typeof(TConcrete);
+            Type contractType = typeof(TContract);
             Binding binding = new Binding(contractType);
-            _container.AddBinding(binding);
-            return new BindingContext<TConcrete>(binding);
+            BindingKey key = CreateKey<TContract>(iD);
+            _container.AddBinding(key, binding);
+            return new BindingContext<TContract>(binding);
         }
 
         protected TContract ResolveFromContainer<TContract>(BindingKey key)
@@ -77,7 +85,7 @@ namespace SBaier.DI
             return GetInstance<TContract>(binding, key);
         }
 
-        private TContract GetInstance<TContract>(Binding binding, BindingKey key)
+		private TContract GetInstance<TContract>(Binding binding, BindingKey key)
         {
             return binding.AmountMode switch
             {
@@ -105,16 +113,24 @@ namespace SBaier.DI
         private TContract CreateInstance<TContract>(Binding binding)
         {
             TContract instance = _instanceFactory.Create<TContract>(this, binding);
-            if(binding.InjectionAllowed)
-                TryInjection(instance);
+            TryInjection(instance, binding);
             return instance;
         }
 
-        private void TryInjection<TContract>(TContract obj)
+        private void TryInjection<TContract>(TContract obj, Binding binding)
         {
             Injectable injectable = obj as Injectable;
-            injectable?.Inject(this);
+            if (injectable == null || !binding.InjectionAllowed)
+                return;
+            ArgumentsResolver argumentsResolver = new ArgumentsResolver(this);
+            argumentsResolver.AddArguments(binding.Arguments);
+            injectable.Inject(argumentsResolver);
         }
+
+        private BindingKey CreateKey<TContract>(IComparable iD = default)
+		{
+            return new BindingKey(typeof(TContract), iD);
+		}
 	}
 }
 

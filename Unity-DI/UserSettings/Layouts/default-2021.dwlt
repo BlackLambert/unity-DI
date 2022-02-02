@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357.3334
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 49
+  controlID: 19
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -121,14 +121,14 @@ MonoBehaviour:
     y: 773
     width: 1955
     height: 534
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 39
+  controlID: 28
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 40
+  controlID: 87
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -306,7 +306,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 131
+    ID: 314
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -337,9 +337,9 @@ MonoBehaviour:
       uniqueId: '[Unity-DI][suite]'
       name: Unity-DI
       fullName: Unity-DI
-      resultStatus: 1
-      duration: 0.1390629
-      messages: 
+      resultStatus: 2
+      duration: 58.025288
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -353,9 +353,9 @@ MonoBehaviour:
       uniqueId: '[SBaier.DI.Tests.dll][suite]'
       name: SBaier.DI.Tests.dll
       fullName: D:/6_Projekte/unity-DI/Unity-DI/Library/ScriptAssemblies/SBaier.DI.Tests.dll
-      resultStatus: 1
-      duration: 0.1021295
-      messages: 
+      resultStatus: 2
+      duration: 57.85413
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -369,9 +369,9 @@ MonoBehaviour:
       uniqueId: SBaier.DI.Tests.dll/[SBaier][suite]
       name: SBaier
       fullName: SBaier
-      resultStatus: 1
-      duration: 0.0968907
-      messages: 
+      resultStatus: 2
+      duration: 57.836308
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -381,13 +381,13 @@ MonoBehaviour:
       categories: []
       parentId: 1003
       parentUniqueId: '[SBaier.DI.Tests.dll][suite]'
-    - id: 1019
+    - id: 1029
       uniqueId: SBaier.DI.Tests.dll/SBaier/[DI][suite]
       name: DI
       fullName: SBaier.DI
-      resultStatus: 1
-      duration: 0.094887
-      messages: 
+      resultStatus: 2
+      duration: 57.831253
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -395,15 +395,15 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1018
+      parentId: 1028
       parentUniqueId: SBaier.DI.Tests.dll/[SBaier][suite]
     - id: 1006
       uniqueId: SBaier.DI.Tests.dll/SBaier/DI/[SBaier.DI.Tests][SBaier.DI.Tests][suite]
       name: Tests
       fullName: SBaier.DI.Tests
-      resultStatus: 1
-      duration: 0.092172
-      messages: 
+      resultStatus: 2
+      duration: 57.827484
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
       name: BindingContextTests
       fullName: SBaier.DI.Tests.BindingContextTests
       resultStatus: 1
-      duration: 0.0634172
+      duration: 0.0421145
       messages: 
       output: 
       stacktrace: 
@@ -434,7 +434,7 @@ MonoBehaviour:
       name: BindingContext_To_BindsConcreteType
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_To_BindsConcreteType
       resultStatus: 1
-      duration: 0.0264958
+      duration: 0.0176367
       messages: 
       output: 
       stacktrace: 
@@ -451,7 +451,7 @@ MonoBehaviour:
       name: BindingContext_ToNew_BindsConcreteType
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_ToNew_BindsConcreteType
       resultStatus: 1
-      duration: 0.0051145
+      duration: 0.0012706
       messages: 
       output: 
       stacktrace: 
@@ -468,7 +468,7 @@ MonoBehaviour:
       name: BindingContext_ToNew_CreationFunctionCallesDefaultConstructor
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_ToNew_CreationFunctionCallesDefaultConstructor
       resultStatus: 1
-      duration: 0.0016926
+      duration: 0.0015755
       messages: 
       output: 
       stacktrace: 
@@ -485,7 +485,7 @@ MonoBehaviour:
       name: BindingContext_ToNew_CreationFunctionCreatesDefaultConcreteType
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_ToNew_CreationFunctionCreatesDefaultConcreteType
       resultStatus: 1
-      duration: 0.0005753
+      duration: 0.0005629
       messages: 
       output: 
       stacktrace: 
@@ -502,7 +502,7 @@ MonoBehaviour:
       name: BindingContext_ToNew_CreationFunctionCreatesInstanceOfConcreteType
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_ToNew_CreationFunctionCreatesInstanceOfConcreteType
       resultStatus: 1
-      duration: 0.0001507
+      duration: 0.0001933
       messages: 
       output: 
       stacktrace: 
@@ -519,7 +519,7 @@ MonoBehaviour:
       name: BindingContext_ToNew_SetsCreationModeToFromNew
       fullName: SBaier.DI.Tests.BindingContextTests.BindingContext_ToNew_SetsCreationModeToFromNew
       resultStatus: 1
-      duration: 0.0009898
+      duration: 0.0011561
       messages: 
       output: 
       stacktrace: 
@@ -536,7 +536,7 @@ MonoBehaviour:
       name: BindingKeyTests
       fullName: SBaier.DI.Tests.BindingKeyTests
       resultStatus: 1
-      duration: 0.0132915
+      duration: 0.0181759
       messages: 
       output: 
       stacktrace: 
@@ -552,7 +552,7 @@ MonoBehaviour:
       name: BindingKey_Constructor0_IDReturnsDefaultValue
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor0_IDReturnsDefaultValue
       resultStatus: 1
-      duration: 0.0002244
+      duration: 0.0003739
       messages: 
       output: 
       stacktrace: 
@@ -569,7 +569,7 @@ MonoBehaviour:
       name: BindingKey_Constructor0_TypeReturnsDefaultValue
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor0_TypeReturnsDefaultValue
       resultStatus: 1
-      duration: 0.0001706
+      duration: 0.0003137
       messages: 
       output: 
       stacktrace: 
@@ -586,7 +586,7 @@ MonoBehaviour:
       name: BindingKey_Constructor1_IDReturnsNull
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor1_IDReturnsNull
       resultStatus: 1
-      duration: 0.0003477
+      duration: 0.0005804
       messages: 
       output: 
       stacktrace: 
@@ -603,7 +603,7 @@ MonoBehaviour:
       name: BindingKey_Constructor1_TypeReturnsProvidedValue
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor1_TypeReturnsProvidedValue
       resultStatus: 1
-      duration: 0.0001819
+      duration: 0.0002224
       messages: 
       output: 
       stacktrace: 
@@ -620,7 +620,7 @@ MonoBehaviour:
       name: BindingKey_Constructor2_IDReturnsProvidedValue
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor2_IDReturnsProvidedValue
       resultStatus: 1
-      duration: 0.0001858
+      duration: 0.0003053
       messages: 
       output: 
       stacktrace: 
@@ -637,7 +637,7 @@ MonoBehaviour:
       name: BindingKey_Constructor2_TypeReturnsProvidedValue
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Constructor2_TypeReturnsProvidedValue
       resultStatus: 1
-      duration: 0.0001435
+      duration: 0.0002034
       messages: 
       output: 
       stacktrace: 
@@ -654,7 +654,7 @@ MonoBehaviour:
       name: BindingKey_Equals_TwoKeysWithDifferentIDsAreNotEqual
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Equals_TwoKeysWithDifferentIDsAreNotEqual
       resultStatus: 1
-      duration: 0.0020413
+      duration: 0.002661
       messages: 
       output: 
       stacktrace: 
@@ -671,7 +671,7 @@ MonoBehaviour:
       name: BindingKey_Equals_TwoKeysWithDifferentIDTypesAreNotEqual
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Equals_TwoKeysWithDifferentIDTypesAreNotEqual
       resultStatus: 1
-      duration: 0.000212
+      duration: 0.0002933
       messages: 
       output: 
       stacktrace: 
@@ -688,7 +688,7 @@ MonoBehaviour:
       name: BindingKey_Equals_TwoKeysWithDifferentTypesAreNotEqual
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Equals_TwoKeysWithDifferentTypesAreNotEqual
       resultStatus: 1
-      duration: 0.0002122
+      duration: 0.0002344
       messages: 
       output: 
       stacktrace: 
@@ -705,7 +705,7 @@ MonoBehaviour:
       name: BindingKey_Equals_TwoKeysWithEqualPropertiesAreEqual
       fullName: SBaier.DI.Tests.BindingKeyTests.BindingKey_Equals_TwoKeysWithEqualPropertiesAreEqual
       resultStatus: 1
-      duration: 0.0002788
+      duration: 0.0003455
       messages: 
       output: 
       stacktrace: 
@@ -722,7 +722,7 @@ MonoBehaviour:
       name: BindingTests
       fullName: SBaier.DI.Tests.BindingTests
       resultStatus: 1
-      duration: 0.0101009
+      duration: 0.0116704
       messages: 
       output: 
       stacktrace: 
@@ -738,7 +738,7 @@ MonoBehaviour:
       name: Binding_ToString_ContainsAllPropertyValues
       fullName: SBaier.DI.Tests.BindingTests.Binding_ToString_ContainsAllPropertyValues
       resultStatus: 1
-      duration: 0.0010557
+      duration: 0.0026501
       messages: 
       output: 
       stacktrace: 
@@ -755,7 +755,7 @@ MonoBehaviour:
       name: Binding_ToString_ContainsClassName
       fullName: SBaier.DI.Tests.BindingTests.Binding_ToString_ContainsClassName
       resultStatus: 1
-      duration: 0.0001792
+      duration: 0.000297
       messages: 
       output: 
       stacktrace: 
@@ -767,13 +767,203 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1014
       parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingTests][suite]
-    m_ResultText: Binding_ToString_ContainsClassName (0,000s)
-    m_ResultStacktrace: 
+    - id: 1022
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidationInstallerTests][suite]
+      name: BindingValidationInstallerTests
+      fullName: SBaier.DI.Tests.BindingValidationInstallerTests
+      resultStatus: 2
+      duration: 57.822636
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1027
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/[SBaier.DI.Tests][SBaier.DI.Tests][suite]
+    - id: 1023
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/BindingValidationInstallerTests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsBindingValidator]
+      name: BindingValidationInstaller_InstallBindings_BindsBindingValidator
+      fullName: SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsBindingValidator
+      resultStatus: 2
+      duration: 57.74701
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
+      output: 
+      stacktrace: "  at SBaier.DI.BindingValidationInstaller.InstallBindings (SBaier.DI.Binder
+        binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Scripts\\Core\\Binding\\Validation\\BindingValidationInstaller.cs:7
+        \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.WhenInstallBindingsIsCalledOn
+        (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:84
+        \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsBindingValidator
+        () [0x00008] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:35
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <c183552e59b24622ab6b4273bc2ea328>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidationInstallerTests][suite]
+    - id: 1024
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/BindingValidationInstallerTests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsFromBindingValidator]
+      name: BindingValidationInstaller_InstallBindings_BindsFromBindingValidator
+      fullName: SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsFromBindingValidator
+      resultStatus: 2
+      duration: 0.0033847
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
+      output: 
+      stacktrace: "  at SBaier.DI.BindingValidationInstaller.InstallBindings (SBaier.DI.Binder
+        binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Scripts\\Core\\Binding\\Validation\\BindingValidationInstaller.cs:7
+        \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.WhenInstallBindingsIsCalledOn
+        (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:84
+        \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsFromBindingValidator
+        () [0x00008] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:43
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <c183552e59b24622ab6b4273bc2ea328>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidationInstallerTests][suite]
+    - id: 1025
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidatorTests][suite]
+      name: BindingValidatorTests
+      fullName: SBaier.DI.Tests.BindingValidatorTests
+      resultStatus: 1
+      duration: 0.0258403
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1030
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/[SBaier.DI.Tests][SBaier.DI.Tests][suite]
+    - id: 1026
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/BindingValidatorTests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidatorTests.BindingValidator_Validate_CallsFromValidator]
+      name: BindingValidator_Validate_CallsFromValidator
+      fullName: SBaier.DI.Tests.BindingValidatorTests.BindingValidator_Validate_CallsFromValidator
+      resultStatus: 1
+      duration: 0.0113354
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1025
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidatorTests][suite]
+    - id: 1027
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/BindingValidatorTests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidatorTests.BindingValidator_Validate_NullBindingThrowsException]
+      name: BindingValidator_Validate_NullBindingThrowsException
+      fullName: SBaier.DI.Tests.BindingValidatorTests.BindingValidator_Validate_NullBindingThrowsException
+      resultStatus: 1
+      duration: 0.004865
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1025
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.BindingValidatorTests][suite]
+    - id: 1027
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.FromBindingValidatorTest][suite]
+      name: FromBindingValidatorTest
+      fullName: SBaier.DI.Tests.FromBindingValidatorTest
+      resultStatus: 1
+      duration: 0.0090936
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1033
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/[SBaier.DI.Tests][SBaier.DI.Tests][suite]
+    - id: 1030
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/FromBindingValidatorTest/[SBaier.DI.Tests][SBaier.DI.Tests.FromBindingValidatorTest.FromBindingValidator_Validate_InvalidBindingsCauseException]
+      name: FromBindingValidator_Validate_InvalidBindingsCauseException
+      fullName: SBaier.DI.Tests.FromBindingValidatorTest.FromBindingValidator_Validate_InvalidBindingsCauseException
+      resultStatus: 1
+      duration: 0.0014077
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1028
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.FromBindingValidatorTest][suite]
+    - id: 1029
+      uniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/FromBindingValidatorTest/[SBaier.DI.Tests][SBaier.DI.Tests.FromBindingValidatorTest.FromBindingValidator_Validate_ValidBindingsPass]
+      name: FromBindingValidator_Validate_ValidBindingsPass
+      fullName: SBaier.DI.Tests.FromBindingValidatorTest.FromBindingValidator_Validate_ValidBindingsPass
+      resultStatus: 1
+      duration: 0.001265
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1028
+      parentUniqueId: SBaier.DI.Tests.dll/SBaier/DI/Tests/[SBaier.DI.Tests][SBaier.DI.Tests.FromBindingValidatorTest][suite]
+    m_ResultText: "BindingValidationInstaller_InstallBindings_BindsBindingValidator
+      (57,747s)\n---\nSystem.NullReferenceException : Object reference not set to
+      an instance of an object\n---\nat SBaier.DI.BindingValidationInstaller.InstallBindings
+      (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Scripts\\Core\\Binding\\Validation\\BindingValidationInstaller.cs:7
+      \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.WhenInstallBindingsIsCalledOn
+      (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:84
+      \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsBindingValidator
+      () [0x00008] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:35
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <c183552e59b24622ab6b4273bc2ea328>:0"
+    m_ResultStacktrace: "  at SBaier.DI.BindingValidationInstaller.InstallBindings
+      (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Scripts\\Core\\Binding\\Validation\\BindingValidationInstaller.cs:7
+      \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.WhenInstallBindingsIsCalledOn
+      (SBaier.DI.Binder binder) [0x00001] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:84
+      \r\n  at SBaier.DI.Tests.BindingValidationInstallerTests.BindingValidationInstaller_InstallBindings_BindsBindingValidator
+      () [0x00008] in D:\\6_Projekte\\unity-DI\\Unity-DI\\Assets\\Tests\\Binding\\Validation\\BindingValidationInstallerTests.cs:35
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <c183552e59b24622ab6b4273bc2ea328>:0 "
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d1a6323a
-      m_LastClickedID: 976398033
-      m_ExpandedIDs: a20fae89953005a0510843ab003a68db31870222028ac32905ea2a38476941756b7ff37affffff7f
+      m_SelectedIDs: 97954da3
+      m_LastClickedID: -1555196521
+      m_ExpandedIDs: a20fae89953005a0510843ab16e03fd0003a68db67452de30cd76bec31870222028ac32939c2513205ea2a38476941756b7ff37affffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -892,22 +1082,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Core/Binding
+    - Assets/Scripts/Example
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Core/Binding
+  - Assets/Scripts/Example
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\6_Projekte\unity-DI\Unity-DI
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 95}
-    m_SelectedIDs: ee510000
-    m_LastClickedID: 20974
-    m_ExpandedIDs: 00000000ea510000ec510000ee510000fa51000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 7}
+    m_SelectedIDs: 6e520000
+    m_LastClickedID: 21102
+    m_ExpandedIDs: 00000000125200001452000016520000185200001a520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -935,7 +1125,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ea510000ec510000ee510000
+    m_ExpandedIDs: 00000000125200001452000016520000185200001a520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -960,24 +1150,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 34600000
+    m_LastClickedInstanceID: 24628
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: FromNewBindingContext
-      m_OriginalName: FromNewBindingContext
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 4280
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
@@ -1025,7 +1215,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 4106
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -1063,9 +1253,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b8100000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: ccc3ffff0cc4ffffccc5ffffd8ceffff18cfffffdcd0ffffc8deffff08dfffffa0e0ffffd2e0ffff12e1ffffc2e2ffff84e8ffffc4e8fffffce9ffff9cecffffdcecffff14eefffffaeeffff3aefffffc6f0ffff10fbffff
+      m_ExpandedIDs: c0caffff00cbffff38ccffff1ccdffff5ccdffff94cefffffacfffff3ad0ffff7ad1ffffb0d2fffff0d2ffff28d4ffffa6d6ffffe6d6ffffd8d8ffff10fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1081,7 +1271,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 4}
+        m_ClientGUIView: {fileID: 11}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0

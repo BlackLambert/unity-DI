@@ -28,10 +28,9 @@ namespace SBaier.DI
             return new FromBindingContext(_binding);
         }
 
-        public FromBindingContext FromFactory<TFactory>() where TFactory: Factory<TConcrete>
+        public FromBindingContext FromFactory()
         {
             _binding.CreationMode = InstanceCreationMode.FromFactory;
-            _binding.InstanceFactoryType = typeof(TFactory);
             return new FromBindingContext(_binding);
         }
     }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SBaier.DI
@@ -15,7 +12,7 @@ namespace SBaier.DI
 
         private void Awake()
         {
-            Init(new Bootstrapper());
+            Init(new Bootstrapper().Resolver);
         }
         
         protected override void DoInit(Resolver resolver)

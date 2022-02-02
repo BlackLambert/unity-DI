@@ -1,6 +1,6 @@
 {
     "name": "SBaier.DI.Tests",
-    "rootNamespace": "",
+    "rootNamespace": "SBaier.DI.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

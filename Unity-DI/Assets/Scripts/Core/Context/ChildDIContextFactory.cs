@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using SBaier.DI;
-using UnityEngine;
-
 namespace SBaier.DI
 {
     public class ChildDIContextFactory : Factory<ChildDIContext>, Injectable
