@@ -5,7 +5,7 @@ namespace SBaier.DI
     public class AppContext : MonoContext
     {
         private BasicDIContext _dIContext;
-        protected override DIContext DIContext => _dIContext;
+        public override DIContext DIContext => _dIContext;
 
         private void Awake()
         {

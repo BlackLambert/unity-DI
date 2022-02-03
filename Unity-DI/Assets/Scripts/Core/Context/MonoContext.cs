@@ -14,7 +14,7 @@ namespace SBaier.DI
         private MonoInstaller[] _monoInstallers;
 
         private List<Installer> _installers = new List<Installer>();
-        protected abstract DIContext DIContext { get; }
+        public abstract DIContext DIContext { get; }
 
 
         public virtual void Init(Resolver baseResolver)

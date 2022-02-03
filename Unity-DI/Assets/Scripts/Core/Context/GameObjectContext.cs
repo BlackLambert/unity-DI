@@ -6,13 +6,14 @@ namespace SBaier.DI
     {
         private ChildDIContext _currentContext;
         private GameObjectInjector _injector;
-        protected override DIContext DIContext => _currentContext;
+        public override DIContext DIContext => _currentContext;
         
         protected override void DoInit(Resolver resolver)
         {
             _injector = resolver.Resolve<GameObjectInjector>();
-            Factory<ChildDIContext> contextFactory = resolver.Resolve<Factory<ChildDIContext>>();
-            _currentContext = contextFactory.Create();
+            DIContext parentContext = resolver.Resolve<DIContext>();
+            Factory<ChildDIContext, DIContext> contextFactory = resolver.Resolve<Factory<ChildDIContext, DIContext>>();
+            _currentContext = contextFactory.Create(parentContext);
         }
 
         protected override void DoInjection()

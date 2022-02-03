@@ -18,7 +18,7 @@ namespace SBaier.DI
         {
             binder.BindToSelf<Scene>().FromInstanceAsSingle(_contextObject.scene);
             binder.BindToSelf<DIContext>().FromInstanceAsSingle(_diContext);
-            binder.Bind<Factory<ChildDIContext>>().ToNew<ChildDIContextFactory>();
+            binder.Bind<Factory<ChildDIContext, DIContext>>().ToNew<ChildDIContextFactory>();
         }
     }
 }
