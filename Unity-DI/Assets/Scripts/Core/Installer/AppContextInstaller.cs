@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace SBaier.DI
 {
     public class AppContextInstaller : Installer

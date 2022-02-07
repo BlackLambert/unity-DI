@@ -16,6 +16,7 @@ namespace SBaier.DI.Examples
 		private void Start()
 		{
 			Bla bla = _factory.Create();
+			bla.transform.SetParent(transform);
 			Debug.Log(bla.ToString());
 			Debug.Log($"The Cam is {_cam}");
 		}
