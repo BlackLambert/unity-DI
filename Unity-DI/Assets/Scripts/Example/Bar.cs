@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBaier.DI.Examples
 {
-    public class Bar: Injectable
+    public class Bar: IBar, Injectable
     {
         private Baz _baz;
-        
-        public void Inject(Resolver context)
+
+		public Baz Baz => _baz;
+
+		public void Inject(Resolver context)
         {
             _baz = context.Resolve<Baz>();
             Debug.Log($"Bar: Baz {_baz}");

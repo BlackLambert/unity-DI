@@ -2,7 +2,7 @@ using System;
 
 namespace SBaier.DI
 {
-    public class ToBindingContext<TContract, TConcrete> where TConcrete : TContract
+    public class ToBindingContext<TConcrete>
     {
         private Binding _binding;
 

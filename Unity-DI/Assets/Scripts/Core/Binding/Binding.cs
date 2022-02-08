@@ -5,7 +5,6 @@ namespace SBaier.DI
 {
     public class Binding
     {
-        public Type ContractType;
         public Type ConcreteType;
         public InstanceCreationMode CreationMode;
         public InstanceAmountMode AmountMode;
@@ -16,7 +15,6 @@ namespace SBaier.DI
 
         public Binding(Type contractType)
         {
-            ContractType = contractType;
             ConcreteType = contractType;
             CreationMode = InstanceCreationMode.Undefined;
             AmountMode = InstanceAmountMode.PerRequest;
@@ -26,7 +24,7 @@ namespace SBaier.DI
 
 		public override string ToString()
 		{
-            return $"Binding (Contract: {ContractType} | " +
+            return $"Binding (" +
                 $"Concrete: {ConcreteType} | " +
                 $"CreationMode: {CreationMode} | " +
                 $"CreateInstanceFunction: {CreateInstanceFunction} | " +

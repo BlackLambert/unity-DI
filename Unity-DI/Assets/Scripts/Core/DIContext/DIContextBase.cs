@@ -26,7 +26,7 @@ namespace SBaier.DI
             return BindToContainer<TContract>(iD);
 		}
 
-        public ToBindingContext<TContract, TContract> BindToSelf<TContract>(IComparable iD = default)
+        public ToBindingContext<TContract> BindToSelf<TContract>(IComparable iD = default)
         {
             return Bind<TContract>(iD).To<TContract>();
         }
@@ -76,37 +76,37 @@ namespace SBaier.DI
             Binding binding = new Binding(contractType);
             BindingKey key = CreateKey<TContract>(iD);
             _container.AddBinding(key, binding);
-            return new BindingContext<TContract>(binding);
+            return new BindingContext<TContract>(binding, _container);
         }
 
         protected TContract ResolveFromContainer<TContract>(BindingKey key)
         {
             Binding binding = _container.GetBinding(key);
-            return GetInstance<TContract>(binding, key);
+            return GetInstance<TContract>(binding);
         }
 
-		private TContract GetInstance<TContract>(Binding binding, BindingKey key)
+		private TContract GetInstance<TContract>(Binding binding)
         {
             return binding.AmountMode switch
             {
-                InstanceAmountMode.Single => ResolveSingleInstance<TContract>(binding, key),
+                InstanceAmountMode.Single => ResolveSingleInstance<TContract>(binding),
                 InstanceAmountMode.PerRequest => CreateInstance<TContract>(binding),
                 InstanceAmountMode.Undefined => throw new ArgumentException(),
                 _ => throw new NotImplementedException()
             };
         }
 
-        private TContract ResolveSingleInstance<TContract>(Binding binding, BindingKey key)
+        private TContract ResolveSingleInstance<TContract>(Binding binding)
         {
-            if (_container.HasSingleInstanceOf<TContract>())
-                return _container.GetSingleInstance<TContract>();
-            return CreateSingleInstance<TContract>(binding, key);
+            if (_container.HasSingleInstanceOf(binding))
+                return _container.GetSingleInstance<TContract>(binding);
+            return CreateSingleInstance<TContract>(binding);
         }
 
-        private TContract CreateSingleInstance<TContract>(Binding binding, BindingKey key)
+        private TContract CreateSingleInstance<TContract>(Binding binding)
         {
             TContract instance = CreateInstance<TContract>(binding);
-            _container.StoreSingleInstance(key, instance);
+            _container.StoreSingleInstance(binding, instance);
             return instance;
         }
 

@@ -6,7 +6,7 @@ namespace SBaier.DI
     public class DIContainer 
     {
         private readonly Dictionary<BindingKey, Binding> _bindings = new Dictionary<BindingKey, Binding>();
-        private readonly Dictionary<BindingKey, object> _singleInstances = new Dictionary<BindingKey, object>();
+        private readonly Dictionary<Binding, object> _singleInstances = new Dictionary<Binding, object>();
         
         public void AddBinding(BindingKey key, Binding binding)
         {
@@ -36,27 +36,26 @@ namespace SBaier.DI
             return _bindings.Values;
 		}
 
-        public bool HasSingleInstanceOf<TContract>()
-        {
-            Type contract = typeof(TContract);
-            return _singleInstances.ContainsKey(new BindingKey(contract, default));
-        }
-        
-        public bool HasSingleInstanceOf(BindingKey key)
-        {
-            return _singleInstances.ContainsKey(key);
-        }
-        
-        public TContract GetSingleInstance<TContract>(IComparable iD = default)
+        public bool HasSingleInstanceOf<TContract>(IComparable iD = default)
         {
             BindingKey key = CreateKey<TContract>(iD);
-            ValidateHasSingleInstance(key);
-            return (TContract) _singleInstances[key];
+            Binding binding = GetBinding(key);
+            return HasSingleInstanceOf(binding);
         }
 
-        public void StoreSingleInstance<TContract>(BindingKey key, TContract instance)
+        public bool HasSingleInstanceOf(Binding binding)
         {
-            ValidateBindingExists(key);
+            return _singleInstances.ContainsKey(binding);
+        }
+        
+        public TContract GetSingleInstance<TContract>(Binding binding)
+        {
+            ValidateHasSingleInstance(binding);
+            return (TContract) _singleInstances[binding];
+        }
+
+        public void StoreSingleInstance<TContract>(Binding key, TContract instance)
+        {
             ValidateHasNoSingleInstance(key);
             _singleInstances.Add(key, instance);
         }
@@ -84,13 +83,13 @@ namespace SBaier.DI
                 throw new AlreadyBoundException();
         }
 
-        private void ValidateHasSingleInstance(BindingKey key)
+        private void ValidateHasSingleInstance(Binding key)
         {
             if (!HasSingleInstanceOf(key))
                 throw new MissingSingleInstanceException();
         }
 
-        private void ValidateHasNoSingleInstance(BindingKey key)
+        private void ValidateHasNoSingleInstance(Binding key)
         {
             if (HasSingleInstanceOf(key))
                 throw new MissingSingleInstanceException();

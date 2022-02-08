@@ -69,7 +69,7 @@ namespace SBaier.DI.Tests
 
 		private BindingContext<Foo> GivenANewBindingContext(Binding binding)
 		{
-			return new BindingContext<Foo>(binding);
+			return new BindingContext<Foo>(binding, new DIContainer());
 		}
 
 		private void WhenToIsCalled(BindingContext<Foo> context)

@@ -40,7 +40,6 @@ namespace SBaier.DI.Tests
 
         private void ThenStringContainsAllPropertyValues(string bindingString, Binding binding)
         {
-            Assert.IsTrue(bindingString.Contains(binding.ContractType.ToString()));
             Assert.IsTrue(bindingString.Contains(binding.ConcreteType.ToString()));
             Assert.IsTrue(bindingString.Contains(binding.AmountMode.ToString()));
             Assert.IsTrue(bindingString.Contains(binding.CreateInstanceFunction.ToString()));
