@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -29,6 +30,11 @@ namespace SBaier.DI
             return new FromNewBindingContext<TConcrete>(_binding);
         }
 
+        public ToComponentBindingContext<TConcrete> ToComponent<TConcrete>() where TConcrete : Component, TContract
+        {
+            return new ToComponentBindingContext<TConcrete>(_binding);
+        }
+
         public BindingContext<TContract, TContract2> And<TContract2>(IComparable iD = default)
 		{
             _toContainerBinder.Store<TContract2>(_binding, iD);
@@ -48,6 +54,11 @@ namespace SBaier.DI
         public FromNewBindingContext<TConcrete> ToNew<TConcrete>() where TConcrete : TContract1, TContract2, new()
         {
             return new FromNewBindingContext<TConcrete>(_binding);
+        }
+
+        public ToComponentBindingContext<TConcrete> ToComponent<TConcrete>() where TConcrete : Component, TContract1, TContract2
+        {
+            return new ToComponentBindingContext<TConcrete>(_binding);
         }
 
         public BindingContext<TContract1, TContract2, TContract3> And<TContract3>(IComparable iD = default)
@@ -71,6 +82,11 @@ namespace SBaier.DI
             return new FromNewBindingContext<TConcrete>(_binding);
         }
 
+        public ToComponentBindingContext<TConcrete> ToComponent<TConcrete>() where TConcrete : Component, TContract1, TContract2, TContract3
+        {
+            return new ToComponentBindingContext<TConcrete>(_binding);
+        }
+
         public BindingContext<TContract1, TContract2, TContract3, TContract4> And<TContract4>(IComparable iD = default)
         {
             _toContainerBinder.Store<TContract3>(_binding, iD);
@@ -90,6 +106,11 @@ namespace SBaier.DI
         public FromNewBindingContext<TConcrete> ToNew<TConcrete>() where TConcrete : TContract1, TContract2, TContract3, TContract4, new()
         {
             return new FromNewBindingContext<TConcrete>(_binding);
+        }
+
+        public ToComponentBindingContext<TConcrete> ToComponent<TConcrete>() where TConcrete : Component, TContract1, TContract2, TContract3, TContract4
+        {
+            return new ToComponentBindingContext<TConcrete>(_binding);
         }
     }
 }

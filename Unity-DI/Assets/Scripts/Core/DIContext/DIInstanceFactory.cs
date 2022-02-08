@@ -1,9 +1,17 @@
 using System;
+using UnityEngine;
 
 namespace  SBaier.DI
 {
-    public class DIInstanceFactory
+    public class DIInstanceFactory : Injectable
     {
+        private PrefabFactory _prefabFactory;
+
+        public void Inject(Resolver resolver)
+        {
+            _prefabFactory = resolver.Resolve<PrefabFactory>();
+        }
+
         public TInstance Create<TInstance>(DIContext context, Binding binding)
         {
             switch (binding.CreationMode)
@@ -14,6 +22,10 @@ namespace  SBaier.DI
                     return (TInstance) binding.CreateInstanceFunction();
                 case InstanceCreationMode.FromFactory:
                     return CreateByFactory<TInstance>(context);
+                case InstanceCreationMode.FromPrefabInstance:
+                    return CreatePrefabInstance<TInstance>(context, binding);
+                case InstanceCreationMode.FromRessourcePrefabInstance:
+                    return CreatePrefabInstanceFromRessources<TInstance>(context, binding);
                 case InstanceCreationMode.Undefined:
                     throw new ArgumentException($"Creation of {typeof(TInstance)} failed. " +
                         $"Can't create an instance with creation Mode {binding.CreationMode}");
@@ -22,10 +34,22 @@ namespace  SBaier.DI
             }
         }
 
-        private TInstance CreateByFactory<TInstance>(DIContext context)
+		private TInstance CreateByFactory<TInstance>(DIContext context)
         {
             Factory<TInstance> factory = context.Resolve<Factory<TInstance>>();
             return factory.Create();
+        }
+
+        private TInstance CreatePrefabInstance<TInstance>(DIContext context, Binding binding)
+        {
+            GameObject prefab = binding.CreateInstanceFunction() as GameObject;
+            return _prefabFactory.Create<TInstance>(prefab, context);
+        }
+
+        private TInstance CreatePrefabInstanceFromRessources<TInstance>(DIContext context, Binding binding)
+        {
+            string path = binding.CreateInstanceFunction() as string;
+            return _prefabFactory.Create<TInstance>(Resources.Load<GameObject>(path), context);
         }
     }
 

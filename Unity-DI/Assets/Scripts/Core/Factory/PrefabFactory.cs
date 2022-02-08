@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SBaier.DI
 {
-	public abstract class PrefabFactoryBase<TPrefab> : Injectable where TPrefab : MonoBehaviour
+	public abstract class PrefabFactoryBase<TPrefab> : Injectable where TPrefab : Component
 	{
 		private GameObjectInjector _injector;
 		private TPrefab _prefab;
@@ -18,12 +18,29 @@ namespace SBaier.DI
 		protected TPrefab CreateInstance(Resolver resolver)
 		{
 			TPrefab instance = GameObject.Instantiate(_prefab);
-			_injector.InjectIntoHierarchy(instance.transform, resolver);
+			_injector.InjectIntoContextHierarchy(instance.transform, resolver);
 			return instance;
 		}
 	}
 
-	public class PrefabFactory<TPrefab> : PrefabFactoryBase<TPrefab>, Factory<TPrefab> where TPrefab : MonoBehaviour
+	public class PrefabFactory : Injectable
+	{
+		private GameObjectInjector _injector;
+
+		public void Inject(Resolver resolver)
+		{
+			_injector = resolver.Resolve<GameObjectInjector>();
+		}
+
+		public TPrefab Create<TPrefab>(GameObject prefab, Resolver resolver)
+		{
+			GameObject instance = GameObject.Instantiate(prefab);
+			_injector.InjectIntoContextHierarchy(instance.transform, resolver);
+			return instance.GetComponent<TPrefab>();
+		}
+	}
+
+	public class PrefabFactory<TPrefab> : PrefabFactoryBase<TPrefab>, Factory<TPrefab> where TPrefab : Component
 	{
 		public TPrefab Create()
 		{
@@ -31,7 +48,7 @@ namespace SBaier.DI
 		}
 	}
 
-	public class PrefabFactory<TPrefab, TArg> : PrefabFactoryBase<TPrefab>, Factory<TPrefab, TArg> where TPrefab : MonoBehaviour
+	public class PrefabFactory<TPrefab, TArg> : PrefabFactoryBase<TPrefab>, Factory<TPrefab, TArg> where TPrefab : Component
 	{
 		public TPrefab Create(TArg arg)
 		{

@@ -37,6 +37,11 @@ namespace SBaier.DI
         public static bool operator ==(BindingKey lhs, BindingKey rhs) => lhs.Equals(rhs);
 
         public static bool operator !=(BindingKey lhs, BindingKey rhs) => !(lhs == rhs);
-    }
+
+		public override string ToString()
+		{
+            return $"{nameof(BindingKey)}({Type} | {ID})";
+		}
+	}
 }
 

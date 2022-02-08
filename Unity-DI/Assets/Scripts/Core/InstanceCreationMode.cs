@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -10,6 +7,8 @@ namespace SBaier.DI
         FromNew = 1,
         FromInstance = 2,
         FromMethod = 4,
-        FromFactory = 8
+        FromFactory = 8,
+        FromPrefabInstance = 16,
+        FromRessourcePrefabInstance = 32,
     }
 }

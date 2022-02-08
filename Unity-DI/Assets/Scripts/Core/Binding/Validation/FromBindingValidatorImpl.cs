@@ -15,6 +15,8 @@ namespace SBaier.DI
                 case InstanceCreationMode.FromInstance:
                 case InstanceCreationMode.FromMethod:
                 case InstanceCreationMode.FromNew:
+                case InstanceCreationMode.FromPrefabInstance:
+                case InstanceCreationMode.FromRessourcePrefabInstance:
                     break;
                 default:
                     throw new NotImplementedException();

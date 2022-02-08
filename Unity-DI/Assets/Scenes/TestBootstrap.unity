@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 845494861}
   - component: {fileID: 845494860}
   - component: {fileID: 845494862}
+  - component: {fileID: 845494863}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -200,6 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _monoInstallers:
   - {fileID: 845494862}
+  - {fileID: 845494863}
   _iD: Main
   _parentContextID: 
 --- !u!4 &845494861
@@ -230,6 +232,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 973764516}
+--- !u!114 &845494863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845494857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bc9798ee377114e9dac82b42038664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _phiPrefab: {fileID: 4512349500587596312, guid: c4573ab74d4fe8d4594c78c534fb7b56, type: 3}
 --- !u!1 &973764514
 GameObject:
   m_ObjectHideFlags: 0
