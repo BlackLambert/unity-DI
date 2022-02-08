@@ -10,7 +10,7 @@ namespace SBaier.DI.Examples
 		public override void InstallBindings(Binder binder)
         {
             binder.Bind<Bar>().And<IBar>("IBar").ToNew<Bar>().AsSingle();
-            binder.BindToSelf<Baz>().FromInstanceAsSingle(_baz);
+            binder.BindInstance(_baz);
         }
 
 		void Injectable.Inject(Resolver resolver)

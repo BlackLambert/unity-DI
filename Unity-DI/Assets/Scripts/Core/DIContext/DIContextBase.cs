@@ -36,6 +36,11 @@ namespace SBaier.DI
             return Bind<TContract>(iD).ToNew<TContract>();
         }
 
+        public AsBindingContext BindInstance<TContract>(TContract instance, IComparable iD = null)
+        {
+            return BindToSelf<TContract>(iD).FromInstanceAsSingle(instance);
+        }
+
         public TContract Resolve<TContract>()
         {
             return Resolve<TContract>((IComparable)default);
