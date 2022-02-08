@@ -2,10 +2,10 @@
 
 namespace SBaier.DI
 {
-    public class BindingContext<TContract>
-    {
-        private readonly Binding _binding;
-        private readonly BindingStorage _toContainerBinder;
+    public abstract class BindingContext
+	{
+        protected readonly Binding _binding;
+        protected readonly BindingStorage _toContainerBinder;
 
         public BindingContext(Binding binding,
             BindingStorage toContainerBinder)
@@ -13,8 +13,13 @@ namespace SBaier.DI
             _binding = binding;
             _toContainerBinder = toContainerBinder;
         }
-        
-        public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract
+    }
+
+    public class BindingContext<TContract> : BindingContext
+    {
+        public BindingContext(Binding binding, BindingStorage toContainerBinder) : base(binding, toContainerBinder) { }
+
+		public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract
         {
             return new ToBindingContext<TConcrete>(_binding);
         }
@@ -31,18 +36,9 @@ namespace SBaier.DI
         }
     }
 
-    public class BindingContext<TContract1, TContract2>
+    public class BindingContext<TContract1, TContract2> : BindingContext
 	{
-        private readonly Binding _binding;
-        private readonly BindingStorage _toContainerBinder;
-
-
-        public BindingContext(Binding binding,
-            BindingStorage toContainerBinder)
-        {
-            _binding = binding;
-            _toContainerBinder = toContainerBinder;
-        }
+        public BindingContext(Binding binding, BindingStorage toContainerBinder) : base(binding, toContainerBinder) { }
 
         public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract1, TContract2
         {
@@ -57,19 +53,13 @@ namespace SBaier.DI
         public BindingContext<TContract1, TContract2, TContract3> And<TContract3>(IComparable iD = default)
         {
             _toContainerBinder.Store<TContract3>(_binding, iD);
-            return new BindingContext<TContract1, TContract2, TContract3>(_binding);
+            return new BindingContext<TContract1, TContract2, TContract3>(_binding, _toContainerBinder);
         }
     }
 
-    public class BindingContext<TContract1, TContract2, TContract3>
+    public class BindingContext<TContract1, TContract2, TContract3> : BindingContext
 	{
-        private readonly Binding _binding;
-
-
-        public BindingContext(Binding binding)
-        {
-            _binding = binding;
-        }
+        public BindingContext(Binding binding, BindingStorage toContainerBinder) : base(binding, toContainerBinder) { }
 
         public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract1, TContract2, TContract3
         {
@@ -77,6 +67,27 @@ namespace SBaier.DI
         }
 
         public FromNewBindingContext<TConcrete> ToNew<TConcrete>() where TConcrete : TContract1, TContract2, TContract3, new()
+        {
+            return new FromNewBindingContext<TConcrete>(_binding);
+        }
+
+        public BindingContext<TContract1, TContract2, TContract3, TContract4> And<TContract4>(IComparable iD = default)
+        {
+            _toContainerBinder.Store<TContract3>(_binding, iD);
+            return new BindingContext<TContract1, TContract2, TContract3, TContract4>(_binding, _toContainerBinder);
+        }
+    }
+
+    public class BindingContext<TContract1, TContract2, TContract3, TContract4> : BindingContext
+	{
+        public BindingContext(Binding binding, BindingStorage toContainerBinder) : base(binding, toContainerBinder) { }
+
+        public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract1, TContract2, TContract3, TContract4
+        {
+            return new ToBindingContext<TConcrete>(_binding);
+        }
+
+        public FromNewBindingContext<TConcrete> ToNew<TConcrete>() where TConcrete : TContract1, TContract2, TContract3, TContract4, new()
         {
             return new FromNewBindingContext<TConcrete>(_binding);
         }
