@@ -1,3 +1,4 @@
+using Moq;
 using NUnit.Framework;
 using System;
 
@@ -69,7 +70,7 @@ namespace SBaier.DI.Tests
 
 		private BindingContext<Foo> GivenANewBindingContext(Binding binding)
 		{
-			return new BindingContext<Foo>(binding, new DIContainer());
+			return new BindingContext<Foo>(binding, new Mock<BindingStorage>().Object);
 		}
 
 		private void WhenToIsCalled(BindingContext<Foo> context)

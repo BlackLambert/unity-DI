@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SBaier.DI
 {
-    public abstract class DIContextBase : DIContext, Injectable
+    public abstract class DIContextBase : DIContext, Injectable, BindingStorage
     {
         private DIContainer _container;
         private DIInstanceFactory _instanceFactory;
@@ -23,7 +23,9 @@ namespace SBaier.DI
 
         public BindingContext<TContract> Bind<TContract>(IComparable iD = default)
 		{
-            return BindToContainer<TContract>(iD);
+            Binding binding = CreateBinding<TContract>();
+            Store<TContract>(binding, iD);
+            return new BindingContext<TContract>(binding, this);
 		}
 
         public ToBindingContext<TContract> BindToSelf<TContract>(IComparable iD = default)
@@ -70,18 +72,21 @@ namespace SBaier.DI
                 _bindingValidator.Validate(binding);
         }
 
+        public void Store<TContract>(Binding binding, IComparable iD = null)
+        {
+            BindingKey key = CreateKey<TContract>(iD);
+            _container.AddBinding(key, binding);
+        }
+
         protected virtual TContract Resolve<TContract>(BindingKey key)
 		{
             return ResolveFromContainer<TContract>(key);
         }
 
-        protected BindingContext<TContract> BindToContainer<TContract>(IComparable iD)
-        {
+        private Binding CreateBinding<TContract>()
+		{
             Type contractType = typeof(TContract);
-            Binding binding = new Binding(contractType);
-            BindingKey key = CreateKey<TContract>(iD);
-            _container.AddBinding(key, binding);
-            return new BindingContext<TContract>(binding, _container);
+            return new Binding(contractType);
         }
 
         protected TContract ResolveFromContainer<TContract>(BindingKey key)

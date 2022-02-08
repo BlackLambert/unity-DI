@@ -5,13 +5,13 @@ namespace SBaier.DI
     public class BindingContext<TContract>
     {
         private readonly Binding _binding;
-        private readonly DIContainer _container;
+        private readonly BindingStorage _toContainerBinder;
 
         public BindingContext(Binding binding,
-            DIContainer container)
+            BindingStorage toContainerBinder)
         {
             _binding = binding;
-            _container = container;
+            _toContainerBinder = toContainerBinder;
         }
         
         public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract
@@ -26,24 +26,22 @@ namespace SBaier.DI
 
         public BindingContext<TContract, TContract2> And<TContract2>(IComparable iD = default)
 		{
-            Type contractType = typeof(TContract2);
-            BindingKey key = new BindingKey(contractType, iD);
-            _container.AddBinding(key, _binding);
-            return new BindingContext<TContract, TContract2>(_binding, _container);
+            _toContainerBinder.Store<TContract2>(_binding, iD);
+            return new BindingContext<TContract, TContract2>(_binding, _toContainerBinder);
         }
     }
 
     public class BindingContext<TContract1, TContract2>
 	{
         private readonly Binding _binding;
-        private readonly DIContainer _container;
+        private readonly BindingStorage _toContainerBinder;
 
 
         public BindingContext(Binding binding,
-            DIContainer container)
+            BindingStorage toContainerBinder)
         {
             _binding = binding;
-            _container = container;
+            _toContainerBinder = toContainerBinder;
         }
 
         public ToBindingContext<TConcrete> To<TConcrete>() where TConcrete : TContract1, TContract2
@@ -58,9 +56,7 @@ namespace SBaier.DI
 
         public BindingContext<TContract1, TContract2, TContract3> And<TContract3>(IComparable iD = default)
         {
-            Type contractType = typeof(TContract3);
-            BindingKey key = new BindingKey(contractType, iD);
-            _container.AddBinding(key, _binding);
+            _toContainerBinder.Store<TContract3>(_binding, iD);
             return new BindingContext<TContract1, TContract2, TContract3>(_binding);
         }
     }
