@@ -25,11 +25,11 @@ With [Zenject](https://github.com/modesttree/Zenject) there already is a mighty 
 - Implement the *Injectable* interface for classes that have external dependencies. It is not important whether the implementing class is a MonoBehaviour or a default C# class.
 - The *Inject()* method of the *Injectable* interface is called by the DIContext the implementing class is in. No custom call necessary
 
-## Common Use Cases
-
-### General Scene Hierarchy
+## General Scene Hierarchy
 <img width="252" alt="Hierarchy within the scene" src="https://user-images.githubusercontent.com/57714553/153228145-bc472e31-e599-4b30-b1c5-f988ade4cf76.png">
 
 1) The *AppContext* initializes the dependency injection. Bindings to this context are valid for the whole application. There should be only one *AppContext* active at the same time.
 2) The *SceneContext* initializes the dependeny injection the scene it is active in. Bindings to this context are only valid in this scene. There should be only one *SceneContext* active per scene.
 3) The *GameObjectContext* initializes the dependeny injection of its GameObject hierarchy. Bindings to this context are only valid for the scripts of this hierarchy. There can be multiple *GameObjectContext* in a scene. Also *GameObjectContexts* within a *GameObjectContext*-hierarchy are possible.
+
+## Common Use Cases
