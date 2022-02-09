@@ -4,6 +4,8 @@ is a lightweight yet mighty [Unity](https://unity.com/de) dependency injection f
 ## Motivation
 With [Zenject](https://github.com/modesttree/Zenject) there already is a mighty dependency injection framework for Unity available allowing true dependency inversion in Unity projects. But the framework comes with a lot of overhead and a lot of functionality to dig in. Usually there are multiple ways to tackle one issue which might be confusing. Unity-DI is taking the good sides of Zenject and tries to remove its downsides.
 
+Why using dependency injection anyway? By default Unity is only supporting [dependency inversion](https://en.wikipedia.org/wiki/Dependency_inversion_principle) by the *SerializeField* attribute. This works fine if the dependency is a MonoBehaviour that exists in the same scene or prefab or when refering an asset. But default class instances can't be refered that way. Also cross-prefab dependencies or dependencies to interfaces can not be resolved that way. Dependency injection is a way to achieve dependency inversion.
+
 ## Features
 
 ### General
