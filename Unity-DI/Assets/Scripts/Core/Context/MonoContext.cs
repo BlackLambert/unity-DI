@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SBaier.DI
 {
@@ -8,8 +7,10 @@ namespace SBaier.DI
     public abstract class MonoContext : MonoBehaviour, Context
     {
         [SerializeField]
-        [FormerlySerializedAs("_installers")]
-        private MonoInstaller[] _monoInstallers;
+        private MonoInstaller[] _monoInstallers = new MonoInstaller[0];
+
+        [SerializeField]
+        private ScriptableObjectInstaller[] _scriptableObjectInstallers = new ScriptableObjectInstaller[0];
 
         private List<Installer> _installers = new List<Installer>();
         public abstract DIContext DIContext { get; }
@@ -43,6 +44,7 @@ namespace SBaier.DI
         {
             List<Installer> result = new List<Installer>(_monoInstallers);
             result.AddRange(_installers);
+            result.AddRange(_scriptableObjectInstallers);
             return result;
         }
 

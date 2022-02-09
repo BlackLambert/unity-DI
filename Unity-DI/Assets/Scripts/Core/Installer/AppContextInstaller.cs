@@ -20,7 +20,6 @@ namespace SBaier.DI
             binder.BindToNewSelf<SceneLoader>();
             binder.BindToNewSelf<SceneContextProvider>().AsSingle();
             binder.Bind<Factory<ChildDIContext, DIContext>>().ToNew<ChildDIContextFactory>();
-            binder.BindToNewSelf<PrefabFactory>().AsSingle();
             new BindingValidationInstaller().InstallBindings(binder);
         }
     }

@@ -74,7 +74,7 @@ namespace SBaier.DI
         private void ValidateBindingExists(BindingKey key)
         {
             if (!HasBinding(key))
-                throw new MissingBindingException($"There is no Binding for Contract {key.Type}");
+                throw new MissingBindingException($"There is no Binding for Contract {key}");
         }
 
         private void ValidateNotBound(BindingKey key)

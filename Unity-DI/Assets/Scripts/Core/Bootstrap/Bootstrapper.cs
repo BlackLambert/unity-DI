@@ -27,6 +27,7 @@ namespace SBaier.DI
             BindingValidator validator = new BindingValidator();
             (validator as Injectable).Inject(CreateBindingValidatorResolver());
             result.Add(validator);
+            result.Add(new GameObjectInjector());
             result.Add(new DIContainer());
             result.Add(new DIInstanceFactory());
             return result;

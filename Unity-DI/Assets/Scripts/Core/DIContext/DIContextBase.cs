@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -8,6 +9,7 @@ namespace SBaier.DI
         private DIContainer _container;
         private DIInstanceFactory _instanceFactory;
         private BindingValidator _bindingValidator;
+        private GameObjectInjector _gameObjectInjector;
 
         void Injectable.Inject(Resolver resolver)
         {
@@ -19,6 +21,7 @@ namespace SBaier.DI
             _container = resolver.Resolve<DIContainer>();
             _instanceFactory = resolver.Resolve<DIInstanceFactory>();
             _bindingValidator = resolver.Resolve<BindingValidator>();
+            _gameObjectInjector = resolver.Resolve<GameObjectInjector>();
         }
 
         public BindingContext<TContract> Bind<TContract>(IComparable iD = default)
@@ -127,14 +130,43 @@ namespace SBaier.DI
             return instance;
         }
 
-        private void TryInjection<TContract>(TContract obj, Binding binding)
+        private void TryInjection<TContract>(TContract instance, Binding binding)
         {
-            Injectable injectable = obj as Injectable;
-            if (injectable == null || !binding.InjectionAllowed)
+            if (!binding.InjectionAllowed)
+                return;
+            if (instance is Component)
+                InjectIntoComponent(instance as Component, binding);
+            else if (instance is GameObject)
+                InjectIntoGameObject(instance as GameObject, binding);
+            else
+                InjectIntoInstance(instance, binding);
+        }
+
+        private void InjectIntoGameObject(GameObject gameObject, Binding binding)
+        {
+            _gameObjectInjector.InjectIntoContextHierarchy(gameObject.transform, CreateResolver(binding));
+        }
+
+        private void InjectIntoComponent(Component component, Binding binding)
+		{
+            _gameObjectInjector.InjectIntoContextHierarchy(component.transform, CreateResolver(binding));
+        }
+
+        private void InjectIntoInstance<TContract>(TContract instance, Binding binding)
+		{
+            Injectable injectable = instance as Injectable;
+            if (injectable == null)
                 return;
             ArgumentsResolver argumentsResolver = new ArgumentsResolver(this);
             argumentsResolver.AddArguments(binding.Arguments);
-            injectable.Inject(argumentsResolver);
+            injectable.Inject(CreateResolver(binding));
+        }
+
+        private ArgumentsResolver CreateResolver(Binding binding)
+		{
+            ArgumentsResolver result = new ArgumentsResolver(this);
+            result.AddArguments(binding.Arguments);
+            return result;
         }
 
         private BindingKey CreateKey<TContract>(IComparable iD = default)

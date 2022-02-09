@@ -23,23 +23,6 @@ namespace SBaier.DI
 		}
 	}
 
-	public class PrefabFactory : Injectable
-	{
-		private GameObjectInjector _injector;
-
-		public void Inject(Resolver resolver)
-		{
-			_injector = resolver.Resolve<GameObjectInjector>();
-		}
-
-		public TPrefab Create<TPrefab>(GameObject prefab, Resolver resolver)
-		{
-			GameObject instance = GameObject.Instantiate(prefab);
-			_injector.InjectIntoContextHierarchy(instance.transform, resolver);
-			return instance.GetComponent<TPrefab>();
-		}
-	}
-
 	public class PrefabFactory<TPrefab> : PrefabFactoryBase<TPrefab>, Factory<TPrefab> where TPrefab : Component
 	{
 		public TPrefab Create()

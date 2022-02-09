@@ -3,16 +3,9 @@ using UnityEngine;
 
 namespace  SBaier.DI
 {
-    public class DIInstanceFactory : Injectable
+    public class DIInstanceFactory
     {
-        private PrefabFactory _prefabFactory;
-
-        public void Inject(Resolver resolver)
-        {
-            _prefabFactory = resolver.Resolve<PrefabFactory>();
-        }
-
-        public TInstance Create<TInstance>(DIContext context, Binding binding)
+         public TInstance Create<TInstance>(DIContext context, Binding binding)
         {
             switch (binding.CreationMode)
             {
@@ -43,14 +36,20 @@ namespace  SBaier.DI
         private TInstance CreatePrefabInstance<TInstance>(DIContext context, Binding binding)
         {
             GameObject prefab = binding.CreateInstanceFunction() as GameObject;
-            return _prefabFactory.Create<TInstance>(prefab, context);
+            return CreatePrefabInstance<TInstance>(prefab);
         }
 
         private TInstance CreatePrefabInstanceFromRessources<TInstance>(DIContext context, Binding binding)
         {
             string path = binding.CreateInstanceFunction() as string;
-            return _prefabFactory.Create<TInstance>(Resources.Load<GameObject>(path), context);
+            return CreatePrefabInstance<TInstance>(Resources.Load<GameObject>(path));
         }
+
+        private TInstance CreatePrefabInstance<TInstance>(GameObject prefab)
+		{
+            GameObject instance = GameObject.Instantiate(prefab);
+            return instance.GetComponent<TInstance>();
+		}
     }
 
 }
