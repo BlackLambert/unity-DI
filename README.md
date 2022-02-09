@@ -25,7 +25,7 @@ Why using dependency injection anyway? By default Unity is only supporting [depe
 
 ### Resolving
 - Implement the *Injectable* interface for classes that have external dependencies. It is not important whether the implementing class is a MonoBehaviour or a default C# class.
-- The *Inject()* method of the *Injectable* interface is called by the DIContext the implementing class is in. No custom call necessary
+- The *Inject()* method of the *Injectable* interface is called by the DIContext the implementing class is in. No custom call is necessary
 
 ## General Scene Hierarchy
 <img width="252" alt="Hierarchy within the scene" src="https://user-images.githubusercontent.com/57714553/153228145-bc472e31-e599-4b30-b1c5-f988ade4cf76.png">
@@ -35,3 +35,8 @@ Why using dependency injection anyway? By default Unity is only supporting [depe
 3) The *GameObjectContext* initializes the dependeny injection of its GameObject hierarchy. Bindings to this context are only valid for the scripts of this hierarchy. There can be multiple *GameObjectContext* in a scene. Also *GameObjectContexts* within a *GameObjectContext*-hierarchy are possible.
 
 ## Common Use Cases
+- A scene depending on another scene
+- Creating a prefab instance with injection (table content, enemy spawner)
+- Specific data for a prefab instance (e.g. HealthData)
+- Loading a scene additionally to the current scenes by also triggering the injection
+- Having an interface as dependency within a MonoBehaviour
