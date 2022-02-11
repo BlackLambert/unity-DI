@@ -40,3 +40,51 @@ Why using dependency injection anyway? By default Unity is only supporting [depe
 - Specific data for a prefab instance (e.g. HealthData)
 - Loading a scene additionally to the current scenes by also triggering the injection
 - Having an interface as dependency within a MonoBehaviour
+
+### Bind classes that are not using the DI Framework
+Most third party APIs and packages won't use this DI Framwork to resolve there dependencies. But one still want these classes to be bound to a DICotext. So let's assess the possibilities here.
+
+#### Use FromMethod to call constructors with parameters
+Having a scenario where you want to bind following class to a DIContext:
+```
+public Foo
+{
+  public Bar Bar { get; }
+
+  public Foo (Bar bar)
+  {
+    Bar = bar;
+  }
+}
+```
+Since the class has a constructor that requires Bar as an argument using ```ToNew()``` is not possible. 
+For this scenario I suggest the following approach:
+- Having an installer that handles the binding of Foo.
+- Inject the current ```Resolver``` into this installer.
+- Bind ```Foo``` by using the ```FromMethod()``` option.
+- Call the constructor of Foo within this method.
+- Resolve ```Bar``` by using the injected resolver.
+
+The installer could look like this:
+```
+public FooInstaller : MonoInstaller, Injectable
+{
+  private Resolver _resolver;
+  
+  public void Inject(Resolver resolver)
+  {
+    _resolver = resolver;
+  }
+  
+  public void InstallBindings(Binder binder)
+  {
+    binder.BindToSelf<Foo>().FromMethod(CreateFoo);
+  }
+  
+  private Foo CreateFoo()
+  {
+    Bar bar = _resolver.Resolve<Bar>();
+    return new Foo(bar);
+  }
+}
+```
