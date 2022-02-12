@@ -8,14 +8,12 @@ namespace SBaier.DI
     {
         private GameObjectInjector _injector;
 
-        public SceneInjector(){}
-
         public void Inject(Resolver resolver)
         {
             _injector = resolver.Resolve<GameObjectInjector>();
         }
 
-        public void InjectRootObjectsOf(Scene scene, DIContext context)
+        public void InjectIntoRootObjectsOf(Scene scene, DIContext context)
         { 
             GameObject[] sceneRootObjects = scene.GetRootGameObjects();
             foreach (GameObject rootObject in sceneRootObjects)

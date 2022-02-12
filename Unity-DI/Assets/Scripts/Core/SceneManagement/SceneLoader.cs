@@ -28,17 +28,20 @@ namespace SBaier.DI
 		private void InitSceneContextOf(Scene scene)
 		{
             GameObject[] sceneRootObjects = scene.GetRootGameObjects();
-            IEnumerable<GameObject> contextObjects = sceneRootObjects.Where(g => g.GetComponent<SceneContext>() != null);
-            List<SceneContext> contexts = contextObjects.Select(g => g.GetComponent<SceneContext>()).ToList();
+            List<SceneContext> contexts = new List<SceneContext>();
+            foreach (GameObject sceneRootObject in sceneRootObjects)
+                contexts.AddRange(sceneRootObject.GetComponentsInChildren<SceneContext>());
             Validate(contexts, scene);
-            contexts.First().Init(_context);
+            contexts[0]?.Init(_context);
         }
 
 		private void Validate(List<SceneContext> contexts, Scene scene)
 		{
-            if (contexts.Count <= 0)
-                throw new MissingSceneContextException(scene.name);
-            if (contexts.Count > 1)
+            int count = contexts.Count;
+            if (count <= 0)
+                Debug.LogWarning($"There is no SceneContext present within scene {scene.name}. " +
+                    $"DIContexts of this scene won't be initialized.");
+            if (count > 1)
                 throw new MultipleSceneContextsException(scene.name);
 		}
 

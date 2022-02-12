@@ -13,9 +13,9 @@ namespace SBaier.DI.Examples
             _bar = context.Resolve<Bar>();
             _ibar = context.Resolve<IBar>("IBar");
             _baz = context.Resolve<Baz>();
-            Debug.Log($"Foo: Bar {_bar}");
-            Debug.Log($"Foo: Bar ({_bar}) and IBar ({_ibar}) are the same? {_ibar.Equals(_bar)}");
-            Debug.Log($"Foo: Baz with name {_baz.Name}");
+            //Debug.Log($"Foo: Bar {_bar}");
+            //Debug.Log($"Foo: Bar ({_bar}) and IBar ({_ibar}) are the same? {_ibar.Equals(_bar)}");
+            //Debug.Log($"Foo: Baz with name {_baz.Name}");
         }
     }
 }

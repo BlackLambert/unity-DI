@@ -10,7 +10,6 @@ namespace SBaier.DI.Examples
 		public override void InstallBindings(Binder binder)
 		{
 			binder.Bind<Factory<Bla>>().ToNew<BlaFactory>().AsSingle().WithArgument(_blaPrefab);
-			Debug.Log("Bla Installer");
 		}
 	}
 }

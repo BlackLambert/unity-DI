@@ -72,7 +72,7 @@ namespace SBaier.DI
 
         protected override void DoInjection()
         {
-            _injector.InjectRootObjectsOf(_scene, _dIContext);
+            _injector.InjectIntoRootObjectsOf(_scene, _dIContext);
         }
     }
 }
