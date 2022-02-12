@@ -6,26 +6,21 @@ namespace SBaier.DI
 {
 	public class ToComponentBindingContext<TConcrete> : ToBindingContext<TConcrete> where TConcrete : Component
 	{
-		private Binding _binding;
-
-		public ToComponentBindingContext(Binding binding) : base(binding) 
-		{
-			_binding = binding;
-		}
+		public ToComponentBindingContext(BindingArguments arguments) : base(arguments) { }
 
 		public FromBindingContext FromNewPrefabInstance(GameObject prefab)
 		{
 			ValidateHasComponent(prefab);
 			_binding.CreationMode = InstanceCreationMode.FromPrefabInstance;
 			_binding.CreateInstanceFunction = () => prefab;
-			return new FromBindingContext(_binding);
+			return new FromBindingContext(_arguments);
 		}
 
 		public FromBindingContext FromNewPrefabInstance(TConcrete prefab)
 		{
 			_binding.CreationMode = InstanceCreationMode.FromPrefabInstance;
 			_binding.CreateInstanceFunction = () => prefab.gameObject;
-			return new FromBindingContext(_binding);
+			return new FromBindingContext(_arguments);
 		}
 
 		public FromBindingContext FromNewRessourcePrefabInstance(string path)
@@ -33,7 +28,7 @@ namespace SBaier.DI
 			ValidateRessourcePath(path);
 			_binding.CreationMode = InstanceCreationMode.FromRessourcePrefabInstance;
 			_binding.CreateInstanceFunction = () => path;
-			return new FromBindingContext(_binding);
+			return new FromBindingContext(_arguments);
 		}
 
 		private void ValidateRessourcePath(string path)

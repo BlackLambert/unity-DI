@@ -2,13 +2,10 @@ using System;
 
 namespace SBaier.DI
 {
-    public class ToBindingContext<TConcrete>
+    public class ToBindingContext<TConcrete> : BindingContextBase
     {
-        private Binding _binding;
-
-        public ToBindingContext(Binding binding)
+        public ToBindingContext(BindingArguments bindingArguments) : base(bindingArguments)
         {
-            _binding = binding;
             _binding.ConcreteType = typeof(TConcrete);
         }
         
@@ -18,20 +15,20 @@ namespace SBaier.DI
             _binding.CreateInstanceFunction = () => instance;
             _binding.InjectionAllowed = false;
             _binding.AmountMode = InstanceAmountMode.Single;
-            return new AsBindingContext(_binding);
+            return new AsBindingContext(_arguments);
         }
 
         public FromBindingContext FromMethod(Func<TConcrete> create)
         {
             _binding.CreationMode = InstanceCreationMode.FromMethod;
             _binding.CreateInstanceFunction = () => create();
-            return new FromBindingContext(_binding);
+            return new FromBindingContext(_arguments);
         }
 
         public FromBindingContext FromFactory()
         {
             _binding.CreationMode = InstanceCreationMode.FromFactory;
-            return new FromBindingContext(_binding);
+            return new FromBindingContext(_arguments);
         }
     }
 }

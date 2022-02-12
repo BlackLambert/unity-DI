@@ -28,7 +28,7 @@ namespace SBaier.DI
 		{
             Binding binding = CreateBinding<TContract>();
             Store<TContract>(binding, iD);
-            return new BindingContext<TContract>(binding, this);
+            return new BindingContext<TContract>(new BindingArguments(binding, this));
 		}
 
         public ToBindingContext<TContract> BindToSelf<TContract>(IComparable iD = default)
@@ -79,6 +79,11 @@ namespace SBaier.DI
         {
             BindingKey key = CreateKey<TContract>(iD);
             _container.AddBinding(key, binding);
+        }
+
+        public void AddNonLazy(Binding binding)
+        {
+            throw new NotImplementedException();
         }
 
         protected virtual TContract Resolve<TContract>(BindingKey key)

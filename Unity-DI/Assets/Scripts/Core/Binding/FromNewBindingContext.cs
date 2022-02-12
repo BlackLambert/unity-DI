@@ -7,11 +7,11 @@ namespace SBaier.DI
 
 	public class FromNewBindingContext<TConcrete> : FromBindingContext where TConcrete : new()
 	{
-		public FromNewBindingContext(Binding binding) : base(binding)
+		public FromNewBindingContext(BindingArguments arguments) : base(arguments)
 		{
-			binding.ConcreteType = typeof(TConcrete);
-			binding.CreationMode = InstanceCreationMode.FromNew;
-			binding.CreateInstanceFunction = () => new TConcrete();
+			_binding.ConcreteType = typeof(TConcrete);
+			_binding.CreationMode = InstanceCreationMode.FromNew;
+			_binding.CreateInstanceFunction = () => new TConcrete();
 		}
 	}
 }

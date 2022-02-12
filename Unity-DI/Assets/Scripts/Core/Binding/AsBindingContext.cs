@@ -2,20 +2,20 @@ using System;
 
 namespace SBaier.DI
 {
-    public class AsBindingContext
+    public class AsBindingContext : BindingContextBase
     {
-        private Binding _binding;
+        public AsBindingContext(BindingArguments arguments) : base(arguments) { }
 
-        public AsBindingContext(Binding binding)
-        {
-            _binding = binding;
-        }
-
-        public AsBindingContext WithArgument<TArg>(TArg argument, IComparable iD = default)
+		public AsBindingContext WithArgument<TArg>(TArg argument, IComparable iD = default)
         {
             BindingKey key = new BindingKey(typeof(TArg), iD);
-            _binding.Arguments.Add(key, argument);
+            _arguments.Binding.Arguments.Add(key, argument);
             return this;
+        }
+
+        public void NonLazy()
+		{
+            _arguments.BindingStorage.AddNonLazy(_binding);
         }
     }
 }

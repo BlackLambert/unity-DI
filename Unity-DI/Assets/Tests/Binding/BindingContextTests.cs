@@ -70,7 +70,8 @@ namespace SBaier.DI.Tests
 
 		private BindingContext<Foo> GivenANewBindingContext(Binding binding)
 		{
-			return new BindingContext<Foo>(binding, new Mock<BindingStorage>().Object);
+			BindingArguments arguments = new BindingArguments(binding, new Mock<BindingStorage>().Object);
+			return new BindingContext<Foo>(arguments);
 		}
 
 		private void WhenToIsCalled(BindingContext<Foo> context)

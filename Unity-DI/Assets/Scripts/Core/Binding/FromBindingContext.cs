@@ -1,24 +1,19 @@
 namespace SBaier.DI
 {
-    public class FromBindingContext
+    public class FromBindingContext : BindingContextBase
     {
-        private Binding _binding;
+        public FromBindingContext(BindingArguments arguments) : base(arguments) { }
 
-        public FromBindingContext(Binding binding)
+		public AsBindingContext AsSingle()
         {
-            _binding = binding;
-        }
-
-        public AsBindingContext AsSingle()
-        {
-            _binding.AmountMode = InstanceAmountMode.Single;
-            return new AsBindingContext(_binding);
+            _arguments.Binding.AmountMode = InstanceAmountMode.Single;
+            return new AsBindingContext(_arguments);
         }
 
         public AsBindingContext PerRequest()
         {
-            _binding.AmountMode = InstanceAmountMode.PerRequest;
-            return new AsBindingContext(_binding);
+            _arguments.Binding.AmountMode = InstanceAmountMode.PerRequest;
+            return new AsBindingContext(_arguments);
         }
     }
 }
