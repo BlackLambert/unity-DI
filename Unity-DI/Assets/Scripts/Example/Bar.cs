@@ -11,7 +11,7 @@ namespace SBaier.DI.Examples
 		public void Inject(Resolver context)
         {
             _baz = context.Resolve<Baz>();
-            Debug.Log($"Bar: Baz {_baz}");
+            Debug.Log($"Bar: Baz {_baz.Name}");
         }
     }
 }

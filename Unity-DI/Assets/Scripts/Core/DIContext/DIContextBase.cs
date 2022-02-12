@@ -11,6 +11,8 @@ namespace SBaier.DI
         private BindingValidator _bindingValidator;
         private GameObjectInjector _gameObjectInjector;
 
+        private HashSet<Binding> _nonLazyBindings = new HashSet<Binding>();
+
         void Injectable.Inject(Resolver resolver)
         {
             DoInject(resolver);
@@ -83,10 +85,29 @@ namespace SBaier.DI
 
         public void AddNonLazy(Binding binding)
         {
-            throw new NotImplementedException();
+            _nonLazyBindings.Add(binding);
         }
 
-        protected virtual TContract Resolve<TContract>(BindingKey key)
+        public void CreateNonLazyInstances()
+        {
+            foreach(Binding binding in new List<Binding>(_nonLazyBindings))
+                CreateNonLazyInstance(binding);
+        }
+
+		private void CreateNonLazyInstance(Binding binding)
+		{
+            if (!_nonLazyBindings.Contains(binding))
+                return;
+            Debug.Log($"[NONLAZY] Create Nonlazy {binding.ConcreteType}");
+            CreateInstance<object>(binding);
+		}
+
+        protected bool HasBinding(BindingKey key)
+		{
+            return _container.HasBinding(key);
+		}
+
+		protected virtual TContract Resolve<TContract>(BindingKey key)
 		{
             return ResolveFromContainer<TContract>(key);
         }
@@ -105,6 +126,7 @@ namespace SBaier.DI
 
 		private TContract GetInstance<TContract>(Binding binding)
         {
+            RemoveFromNonLazy(binding);
             return binding.AmountMode switch
             {
                 InstanceAmountMode.Single => ResolveSingleInstance<TContract>(binding),
@@ -114,7 +136,13 @@ namespace SBaier.DI
             };
         }
 
-        private TContract ResolveSingleInstance<TContract>(Binding binding)
+		private void RemoveFromNonLazy(Binding binding)
+		{
+            if (_nonLazyBindings.Contains(binding))
+                _nonLazyBindings.Remove(binding);
+        }
+
+		private TContract ResolveSingleInstance<TContract>(Binding binding)
         {
             if (_container.HasSingleInstanceOf(binding))
                 return _container.GetSingleInstance<TContract>(binding);

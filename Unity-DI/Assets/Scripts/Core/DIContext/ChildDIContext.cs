@@ -12,14 +12,9 @@ namespace SBaier.DI
 
         protected override TContract Resolve<TContract>(BindingKey key)
         {
-            try
-            {
+            if(HasBinding(key))
                 return base.Resolve<TContract>(key);
-            }
-            catch(MissingBindingException)
-            {
-                return _baseContext.Resolve<TContract>(key.ID);
-            }
+            return _baseContext.Resolve<TContract>(key.ID);
         }
     }
 }
