@@ -13,7 +13,7 @@ namespace SBaier.DI.Examples
 
 		private void Start()
 		{
-			//Debug.Log($"Phi name: {_phi.Name}");
+			Debug.Log($"Phi name: {_phi.Name}");
 		}
 	}
 }

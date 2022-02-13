@@ -22,8 +22,8 @@ namespace SBaier.DI
             InjectIntoInstallers();
             InstallBindings(baseResolver);
             DIContext.ValidateBindings();
-            DIContext.CreateNonLazyInstances();
             DoInjection();
+            DIContext.CreateNonLazyInstances();
         }
 
 		public void AddInstaller(Installer installer)

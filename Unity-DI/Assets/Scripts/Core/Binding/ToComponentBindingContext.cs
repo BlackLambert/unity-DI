@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using UnityEngine;
 
 namespace SBaier.DI
 {
 	public class ToComponentBindingContext<TConcrete> : ToBindingContext<TConcrete> where TConcrete : Component
 	{
-		public ToComponentBindingContext(BindingArguments arguments) : base(arguments) { }
+		public ToComponentBindingContext(BindingArguments arguments) : base(arguments) 
+		{
+			_binding.IsUnityComponent = true;
+		}
 
 		public FromBindingContext FromNewPrefabInstance(GameObject prefab)
 		{

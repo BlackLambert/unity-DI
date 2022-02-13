@@ -48,6 +48,12 @@ namespace SBaier.DI
             return BindToSelf<TContract>(iD).FromInstanceAsSingle(instance);
         }
 
+        public NonResolvableBindingContext CreateNonResolvableInstance()
+        {
+            Binding binding = CreateBinding<object>();
+            return new NonResolvableBindingContext(new BindingArguments(binding, this));
+        }
+
         public TContract Resolve<TContract>()
         {
             return Resolve<TContract>((IComparable)default);
@@ -98,8 +104,10 @@ namespace SBaier.DI
 		{
             if (!_nonLazyBindings.Contains(binding))
                 return;
-            Debug.Log($"[NONLAZY] Create Nonlazy {binding.ConcreteType}");
-            CreateInstance<object>(binding);
+            if(binding.IsUnityComponent)
+                CreateInstance<Component>(binding);
+            else
+                CreateInstance<object>(binding);
 		}
 
         protected bool HasBinding(BindingKey key)
