@@ -96,3 +96,5 @@ Example:
 ```
 binder.CreateNonResolvableInstance().OfComponent<Bar>().FromNewPrefabInstance(_barPrefab).AsSingle().NonLazy();
 ```
+
+See the *NonResolvableInstances* scene for more details.
