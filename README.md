@@ -88,3 +88,11 @@ public FooInstaller : MonoInstaller, Injectable
   }
 }
 ```
+
+### Creating non-resolvable instances
+Having some instances that can not be resolved but get injected in might be useful in some cases. This can be achieved by using the ```CreateNonResolvableInstance()``` method of the binder in combination with ```NonLazy()```. If ```NonLazy()``` is not used, the instance will never be created.
+
+Example:
+```
+binder.CreateNonResolvableInstance().OfComponent<Bar>().FromNewPrefabInstance(_barPrefab).AsSingle().NonLazy();
+```
