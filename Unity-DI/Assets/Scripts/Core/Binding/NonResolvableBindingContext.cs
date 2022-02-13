@@ -16,7 +16,7 @@ namespace SBaier.DI
 			return new FromNewBindingContext<TConcrete>(_arguments);
 		}
 
-		public ToComponentBindingContext<TConcrete> ToComponent<TConcrete>() where TConcrete : Component
+		public ToComponentBindingContext<TConcrete> OfComponent<TConcrete>() where TConcrete : Component
 		{
 			return new ToComponentBindingContext<TConcrete>(_arguments);
 		}

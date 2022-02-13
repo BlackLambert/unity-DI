@@ -10,7 +10,7 @@ namespace SBaier.DI.Examples.NonResolvableInstances
 		public override void InstallBindings(Binder binder)
 		{
 			binder.BindToNewSelf<Foo>().PerRequest().WithArgument("My name is Foo. I am the {0}. of my kind");
-			binder.CreateNonResolvableInstance().ToComponent<Bar>().FromNewPrefabInstance(_barPrefab).AsSingle().NonLazy();
+			binder.CreateNonResolvableInstance().OfComponent<Bar>().FromNewPrefabInstance(_barPrefab).AsSingle().NonLazy();
 		}
 	}
 }
