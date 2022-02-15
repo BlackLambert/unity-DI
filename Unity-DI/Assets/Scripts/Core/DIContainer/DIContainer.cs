@@ -7,7 +7,7 @@ namespace SBaier.DI
     {
         private readonly Dictionary<BindingKey, Binding> _bindings = new Dictionary<BindingKey, Binding>();
         private readonly Dictionary<Binding, object> _singleInstances = new Dictionary<Binding, object>();
-        private HashSet<Binding> _nonLazyBindings = new HashSet<Binding>();
+        public HashSet<Binding> NonLazyBindings { get; } = new HashSet<Binding>();
 
         public void AddBinding<TContract>(Binding binding, IComparable iD = null)
         {
@@ -74,13 +74,13 @@ namespace SBaier.DI
 
         public void RemoveFromNonLazy(Binding binding)
         {
-            if (_nonLazyBindings.Contains(binding))
-                _nonLazyBindings.Remove(binding);
+            if (NonLazyBindings.Contains(binding))
+                NonLazyBindings.Remove(binding);
         }
 
         public void AddNonLazy(Binding binding)
         {
-            _nonLazyBindings.Add(binding);
+            NonLazyBindings.Add(binding);
         }
 
         private BindingKey CreateKey<TContract>(IComparable iD)

@@ -11,7 +11,6 @@ namespace SBaier.DI
         private BindingValidator _bindingValidator;
         private GameObjectInjector _gameObjectInjector;
 
-        private HashSet<Binding> _nonLazyBindings = new HashSet<Binding>();
         private Resolver _dIContainerResolver;
         private Binder _dIContainerBinder;
 
@@ -39,7 +38,7 @@ namespace SBaier.DI
 
         public void CreateNonLazyInstances()
         {
-            foreach(Binding binding in new List<Binding>(_nonLazyBindings))
+            foreach(Binding binding in new List<Binding>(_container.NonLazyBindings))
                 CreateNonLazyInstance(binding);
         }
 
@@ -88,13 +87,14 @@ namespace SBaier.DI
 
         private void CreateNonLazyInstance(Binding binding)
 		{
-            if (!_nonLazyBindings.Contains(binding))
+            if (!_container.NonLazyBindings.Contains(binding))
                 return;
             if(binding.IsUnityComponent)
                 CreateInstance<Component>(binding);
             else
                 CreateInstance<object>(binding);
-		}
+            _container.RemoveFromNonLazy(binding);
+        }
 
         protected bool HasBinding(BindingKey key)
 		{

@@ -12,7 +12,8 @@ namespace SBaier.DI
 
 		protected override Resolver CreateResolver(DIContainer container, DIContext diContext)
 		{
-			return new ChildResolver(_baseContext.GetResolver(), container, diContext);
+			Resolver containerResolver = new ChildResolver(_baseContext.GetResolver(), container, diContext);
+			return new CircularDependencyDetector(containerResolver);
 		}
 	}
 }
