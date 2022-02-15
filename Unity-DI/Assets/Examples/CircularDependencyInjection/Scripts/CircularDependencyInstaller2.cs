@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SBaier.DI.Examples.CircularDependencyInjection
 {
-	public class CircularDependencyInstaller : MonoInstaller
+	public class CircularDependencyInstaller2 : MonoInstaller
 	{
 		public override void InstallBindings(Binder binder)
 		{

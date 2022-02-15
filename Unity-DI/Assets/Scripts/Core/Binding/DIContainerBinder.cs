@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace SBaier.DI
 {
@@ -44,5 +45,10 @@ namespace SBaier.DI
             Type contractType = typeof(TContract);
             return new Binding(contractType);
         }
-    }
+
+		public ToComponentBindingContext<TContract> BindComponent<TContract>(IComparable iD = null) where TContract : Component
+		{
+            return Bind<TContract>().ToComponent<TContract>();
+		}
+	}
 }
