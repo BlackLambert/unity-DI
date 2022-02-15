@@ -5,7 +5,7 @@ namespace SBaier.DI
         public ChildDIContext Create(DIContext parent)
         {
             ChildDIContext result = new ChildDIContext();
-            (result as Injectable).Inject(parent);
+            (result as Injectable).Inject(parent.GetResolver());
             return result;
         }
     }

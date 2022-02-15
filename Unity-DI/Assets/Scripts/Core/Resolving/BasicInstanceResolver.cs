@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SBaier.DI
 {
-    public class BasicInstanceResolver : Resolver
+    public class BasicInstanceResolver : ResolverBase
     {
         private Dictionary<BindingKey, object> _instances =
             new Dictionary<BindingKey, object>();
@@ -14,31 +14,14 @@ namespace SBaier.DI
             _instances.Add(key, instance);
         }
 
-        public TContract Resolve<TContract>()
-        {
-            return Resolve<TContract>(default);
-        }
-
-        public TContract Resolve<TContract>(IComparable iD)
-        {
-            BindingKey key = CreateKey<TContract>(iD);
-            return (TContract) _instances[key];
-        }
-
-		public TContract ResolveOptional<TContract>()
+		protected override TContract DoResolve<TContract>(BindingKey key)
 		{
-            return ResolveOptional<TContract>(default);
+            return (TContract)_instances[key];
         }
 
-		public TContract ResolveOptional<TContract>(IComparable iD)
+		public override bool IsResolvable(BindingKey key)
 		{
-            BindingKey key = CreateKey<TContract>(iD);
-            return _instances.ContainsKey(key) ? (TContract)_instances[key] : default;
-        }
-
-        private BindingKey CreateKey<TContract>(IComparable iD)
-		{
-            return new BindingKey(typeof(TContract), iD);
+            return _instances.ContainsKey(key);
         }
 	}
 }

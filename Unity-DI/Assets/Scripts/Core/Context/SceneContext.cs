@@ -60,19 +60,19 @@ namespace SBaier.DI
 		private void InstallSceneContextBindings()
         {
             SceneContextInstaller installer = new SceneContextInstaller(gameObject, _dIContext);
-            installer.InstallBindings(_dIContext);
+            installer.InstallBindings(_binder);
         }
 
         private void ResolveDependencies()
         {
-            _injector = _dIContext.Resolve<SceneInjector>();
-            _scene = _dIContext.Resolve<Scene>();
-            _sceneContextProvider = _dIContext.Resolve<SceneContextProvider>();
+            _injector = _resolver.Resolve<SceneInjector>();
+            _scene = _resolver.Resolve<Scene>();
+            _sceneContextProvider = _resolver.Resolve<SceneContextProvider>();
         }
 
         protected override void DoInjection()
         {
-            _injector.InjectIntoRootObjectsOf(_scene, _dIContext);
+            _injector.InjectIntoRootObjectsOf(_scene, _resolver);
         }
     }
 }

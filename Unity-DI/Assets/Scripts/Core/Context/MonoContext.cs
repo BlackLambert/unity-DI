@@ -15,6 +15,9 @@ namespace SBaier.DI
         private List<Installer> _installers = new List<Installer>();
         public abstract DIContext DIContext { get; }
 
+        protected Resolver _resolver => DIContext.GetResolver();
+        protected Binder _binder => DIContext.GetBinder();
+
 
         public virtual void Init(Resolver baseResolver)
         {
@@ -52,14 +55,14 @@ namespace SBaier.DI
         private void InstallBindings(Installer installer, Resolver resolver)
         {
             (installer as Injectable)?.Inject(resolver);
-            installer.InstallBindings(DIContext);
+            installer.InstallBindings(_binder);
         }
 
         private void InjectIntoInstallers()
         {
             List<Installer> installers = GetAllInstallers();
             foreach (Installer installer in installers)
-                (installer as Injectable)?.Inject(DIContext);
+                (installer as Injectable)?.Inject(_resolver);
         }
     }
 }

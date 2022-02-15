@@ -3,11 +3,18 @@ using System.Collections.Generic;
 
 namespace SBaier.DI
 {
-    public class DIContainer 
+    public class DIContainer : BindingStorage
     {
         private readonly Dictionary<BindingKey, Binding> _bindings = new Dictionary<BindingKey, Binding>();
         private readonly Dictionary<Binding, object> _singleInstances = new Dictionary<Binding, object>();
-        
+        private HashSet<Binding> _nonLazyBindings = new HashSet<Binding>();
+
+        public void AddBinding<TContract>(Binding binding, IComparable iD = null)
+        {
+            BindingKey key = CreateKey<TContract>(iD);
+            AddBinding(key, binding);
+        }
+
         public void AddBinding(BindingKey key, Binding binding)
         {
             ValidateNotBound(key);
@@ -65,10 +72,21 @@ namespace SBaier.DI
             return _bindings.ContainsKey(key);
         }
 
-        private BindingKey CreateKey<TContract>(IComparable iD = default)
+        public void RemoveFromNonLazy(Binding binding)
+        {
+            if (_nonLazyBindings.Contains(binding))
+                _nonLazyBindings.Remove(binding);
+        }
+
+        public void AddNonLazy(Binding binding)
+        {
+            _nonLazyBindings.Add(binding);
+        }
+
+        private BindingKey CreateKey<TContract>(IComparable iD)
 		{
             Type contract = typeof(TContract);
-            return new BindingKey(contract, default);
+            return new BindingKey(contract, iD);
         }
 
         private void ValidateBindingExists(BindingKey key)
@@ -94,5 +112,5 @@ namespace SBaier.DI
             if (HasSingleInstanceOf(key))
                 throw new MissingSingleInstanceException();
         }
-    }
+	}
 }

@@ -13,11 +13,11 @@ namespace SBaier.DI
             _injector = resolver.Resolve<GameObjectInjector>();
         }
 
-        public void InjectIntoRootObjectsOf(Scene scene, DIContext context)
+        public void InjectIntoRootObjectsOf(Scene scene, Resolver resolver)
         { 
             GameObject[] sceneRootObjects = scene.GetRootGameObjects();
             foreach (GameObject rootObject in sceneRootObjects)
-                _injector.InjectIntoContextHierarchy(rootObject.transform, context);
+                _injector.InjectIntoContextHierarchy(rootObject.transform, resolver);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SBaier.DI
 {
-    public abstract class DIContextBase : DIContext, Injectable, BindingStorage
+    public abstract class DIContextBase : DIContext, Injectable
     {
         private DIContainer _container;
         private DIInstanceFactory _instanceFactory;
@@ -12,68 +12,22 @@ namespace SBaier.DI
         private GameObjectInjector _gameObjectInjector;
 
         private HashSet<Binding> _nonLazyBindings = new HashSet<Binding>();
+        private Resolver _dIContainerResolver;
+        private Binder _dIContainerBinder;
 
         void Injectable.Inject(Resolver resolver)
         {
-            DoInject(resolver);
+            DoInjection(resolver);
+            _dIContainerResolver = CreateResolver(_container, this);
+            _dIContainerBinder = new DIContainerBinder(_container);
         }
 
-        protected virtual void DoInject(Resolver resolver)
+        protected virtual void DoInjection(Resolver resolver)
         {
             _container = resolver.Resolve<DIContainer>();
             _instanceFactory = resolver.Resolve<DIInstanceFactory>();
             _bindingValidator = resolver.Resolve<BindingValidator>();
             _gameObjectInjector = resolver.Resolve<GameObjectInjector>();
-        }
-
-        public BindingContext<TContract> Bind<TContract>(IComparable iD = default)
-		{
-            Binding binding = CreateBinding<TContract>();
-            Store<TContract>(binding, iD);
-            return new BindingContext<TContract>(new BindingArguments(binding, this));
-		}
-
-        public ToBindingContext<TContract> BindToSelf<TContract>(IComparable iD = default)
-        {
-            return Bind<TContract>(iD).To<TContract>();
-        }
-
-        public FromNewBindingContext<TContract> BindToNewSelf<TContract>(IComparable iD = default) where TContract : new()
-        {
-            return Bind<TContract>(iD).ToNew<TContract>();
-        }
-
-        public AsBindingContext BindInstance<TContract>(TContract instance, IComparable iD = null)
-        {
-            return BindToSelf<TContract>(iD).FromInstanceAsSingle(instance);
-        }
-
-        public NonResolvableBindingContext CreateNonResolvableInstance()
-        {
-            Binding binding = CreateBinding<object>();
-            return new NonResolvableBindingContext(new BindingArguments(binding, this));
-        }
-
-        public TContract Resolve<TContract>()
-        {
-            return Resolve<TContract>((IComparable)default);
-        }
-
-        public TContract Resolve<TContract>(IComparable iD)
-        {
-            BindingKey key = CreateKey<TContract>(iD);
-            return Resolve<TContract>(key);
-        }
-
-        public TContract ResolveOptional<TContract>()
-        {
-            return ResolveOptional<TContract>(default);
-        }
-
-        public TContract ResolveOptional<TContract>(IComparable iD)
-        {
-            BindingKey key = CreateKey<TContract>(iD);
-            return _container.HasBinding(key) ? Resolve<TContract>(iD) : default;
         }
 
         public void ValidateBindings()
@@ -83,58 +37,25 @@ namespace SBaier.DI
                 _bindingValidator.Validate(binding);
         }
 
-        public void Store<TContract>(Binding binding, IComparable iD = null)
-        {
-            BindingKey key = CreateKey<TContract>(iD);
-            _container.AddBinding(key, binding);
-        }
-
-        public void AddNonLazy(Binding binding)
-        {
-            _nonLazyBindings.Add(binding);
-        }
-
         public void CreateNonLazyInstances()
         {
             foreach(Binding binding in new List<Binding>(_nonLazyBindings))
                 CreateNonLazyInstance(binding);
         }
 
-		private void CreateNonLazyInstance(Binding binding)
-		{
-            if (!_nonLazyBindings.Contains(binding))
-                return;
-            if(binding.IsUnityComponent)
-                CreateInstance<Component>(binding);
-            else
-                CreateInstance<object>(binding);
-		}
-
-        protected bool HasBinding(BindingKey key)
-		{
-            return _container.HasBinding(key);
-		}
-
-		protected virtual TContract Resolve<TContract>(BindingKey key)
-		{
-            return ResolveFromContainer<TContract>(key);
-        }
-
-        private Binding CreateBinding<TContract>()
-		{
-            Type contractType = typeof(TContract);
-            return new Binding(contractType);
-        }
-
-        protected TContract ResolveFromContainer<TContract>(BindingKey key)
+        public Resolver GetResolver()
         {
-            Binding binding = _container.GetBinding(key);
-            return GetInstance<TContract>(binding);
+            return _dIContainerResolver;
         }
 
-		private TContract GetInstance<TContract>(Binding binding)
+        public Binder GetBinder()
         {
-            RemoveFromNonLazy(binding);
+            return _dIContainerBinder;
+        }
+
+        public TContract GetInstance<TContract>(Binding binding)
+        {
+            _container.RemoveFromNonLazy(binding);
             return binding.AmountMode switch
             {
                 InstanceAmountMode.Single => ResolveSingleInstance<TContract>(binding),
@@ -144,13 +65,7 @@ namespace SBaier.DI
             };
         }
 
-		private void RemoveFromNonLazy(Binding binding)
-		{
-            if (_nonLazyBindings.Contains(binding))
-                _nonLazyBindings.Remove(binding);
-        }
-
-		private TContract ResolveSingleInstance<TContract>(Binding binding)
+        private TContract ResolveSingleInstance<TContract>(Binding binding)
         {
             if (_container.HasSingleInstanceOf(binding))
                 return _container.GetSingleInstance<TContract>(binding);
@@ -166,10 +81,25 @@ namespace SBaier.DI
 
         private TContract CreateInstance<TContract>(Binding binding)
         {
-            TContract instance = _instanceFactory.Create<TContract>(this, binding);
+            TContract instance = _instanceFactory.Create<TContract>(GetResolver(), binding);
             TryInjection(instance, binding);
             return instance;
         }
+
+        private void CreateNonLazyInstance(Binding binding)
+		{
+            if (!_nonLazyBindings.Contains(binding))
+                return;
+            if(binding.IsUnityComponent)
+                CreateInstance<Component>(binding);
+            else
+                CreateInstance<object>(binding);
+		}
+
+        protected bool HasBinding(BindingKey key)
+		{
+            return _container.HasBinding(key);
+		}
 
         private void TryInjection<TContract>(TContract instance, Binding binding)
         {
@@ -185,12 +115,17 @@ namespace SBaier.DI
 
         private void InjectIntoGameObject(GameObject gameObject, Binding binding)
         {
-            _gameObjectInjector.InjectIntoContextHierarchy(gameObject.transform, CreateResolver(binding));
+            InjectIntoTransform(gameObject.transform, binding);
         }
 
         private void InjectIntoComponent(Component component, Binding binding)
 		{
-            _gameObjectInjector.InjectIntoContextHierarchy(component.transform, CreateResolver(binding));
+            InjectIntoTransform(component.transform, binding);
+        }
+
+        private void InjectIntoTransform(Transform transform, Binding binding)
+        {
+            _gameObjectInjector.InjectIntoContextHierarchy(transform, GetResolverFor(binding));
         }
 
         private void InjectIntoInstance<TContract>(TContract instance, Binding binding)
@@ -198,22 +133,17 @@ namespace SBaier.DI
             Injectable injectable = instance as Injectable;
             if (injectable == null)
                 return;
-            ArgumentsResolver argumentsResolver = new ArgumentsResolver(this);
-            argumentsResolver.AddArguments(binding.Arguments);
-            injectable.Inject(CreateResolver(binding));
+            injectable.Inject(GetResolverFor(binding));
         }
 
-        private ArgumentsResolver CreateResolver(Binding binding)
-		{
-            ArgumentsResolver result = new ArgumentsResolver(this);
+        private Resolver GetResolverFor(Binding binding)
+        {
+            ArgumentsResolver result = new ArgumentsResolver(GetResolver());
             result.AddArguments(binding.Arguments);
             return result;
         }
 
-        private BindingKey CreateKey<TContract>(IComparable iD = default)
-		{
-            return new BindingKey(typeof(TContract), iD);
-		}
-	}
+        protected abstract Resolver CreateResolver(DIContainer container, DIContext diContext);
+    }
 }
 

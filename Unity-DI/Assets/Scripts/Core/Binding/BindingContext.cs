@@ -9,7 +9,7 @@ namespace SBaier.DI
 
         public BindingContext<C1, TContract2> And<TContract2>(IComparable iD = default)
 		{
-            _bindingStorage.Store<TContract2>(_binding, iD);
+            _bindingStorage.AddBinding<TContract2>(_binding, iD);
             return new BindingContext<C1, TContract2>(_arguments);
         }
     }
@@ -20,7 +20,7 @@ namespace SBaier.DI
 
         public BindingContext<C1, C2, TContract3> And<TContract3>(IComparable iD = default)
         {
-            _bindingStorage.Store<TContract3>(_binding, iD);
+            _bindingStorage.AddBinding<TContract3>(_binding, iD);
             return new BindingContext<C1, C2, TContract3>(_arguments);
         }
     }
@@ -31,7 +31,7 @@ namespace SBaier.DI
 
         public BindingContext<C1, C2, C3, TContract4> And<TContract4>(IComparable iD = default)
         {
-            _bindingStorage.Store<TContract4>(_binding, iD);
+            _bindingStorage.AddBinding<TContract4>(_binding, iD);
             return new BindingContext<C1, C2, C3, TContract4>(_arguments);
         }
     }

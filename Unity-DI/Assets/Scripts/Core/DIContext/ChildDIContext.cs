@@ -4,17 +4,15 @@ namespace SBaier.DI
     {
         private DIContext _baseContext;
 
-		protected override void DoInject(Resolver resolver)
+		protected override void DoInjection(Resolver resolver)
 		{
-			base.DoInject(resolver);
-            _baseContext = resolver.Resolve<DIContext>();
-        }
+			base.DoInjection(resolver);
+			_baseContext = resolver.Resolve<DIContext>();
+		}
 
-        protected override TContract Resolve<TContract>(BindingKey key)
-        {
-            if(HasBinding(key))
-                return base.Resolve<TContract>(key);
-            return _baseContext.Resolve<TContract>(key.ID);
-        }
-    }
+		protected override Resolver CreateResolver(DIContainer container, DIContext diContext)
+		{
+			return new ChildResolver(_baseContext.GetResolver(), container, diContext);
+		}
+	}
 }

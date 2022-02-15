@@ -32,7 +32,7 @@ namespace SBaier.DI
             foreach (GameObject sceneRootObject in sceneRootObjects)
                 contexts.AddRange(sceneRootObject.GetComponentsInChildren<SceneContext>());
             Validate(contexts, scene);
-            contexts[0]?.Init(_context);
+            contexts[0]?.Init(_context.GetResolver());
         }
 
 		private void Validate(List<SceneContext> contexts, Scene scene)

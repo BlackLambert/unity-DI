@@ -22,7 +22,7 @@ namespace SBaier.DI
         private void InstallSceneContextBindings()
         {
             AppContextInstaller installer = new AppContextInstaller(_dIContext);
-            installer.InstallBindings(_dIContext);
+            installer.InstallBindings(_binder);
         }
 
 		protected override void DoInjection()
@@ -30,7 +30,7 @@ namespace SBaier.DI
             SceneContext sceneContext = FindObjectOfType<SceneContext>();
             if (sceneContext == null)
                 throw new MissingSceneContextException();
-            sceneContext.Init(_dIContext);
+            sceneContext.Init(_resolver);
         }
 	}
 }
