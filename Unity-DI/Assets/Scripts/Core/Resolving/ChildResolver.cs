@@ -1,23 +1,25 @@
 namespace SBaier.DI
 {
-    public class ChildResolver : DIContainerResolver
+    public class ChildResolver : ResolverBase
 	{
 		private readonly Resolver _parent;
+		private readonly Resolver _baseResolver;
 
-		public ChildResolver(Resolver parent, BindingsContainer container, DIContext context) : base(container, context)
+		public ChildResolver(Resolver parent, Resolver baseResolver)
 		{
 			_parent = parent;
+			_baseResolver = baseResolver;
 		}
 
 		public override bool IsResolvable(BindingKey key)
 		{
-			return base.IsResolvable(key) || _parent.IsResolvable(key);
+			return _baseResolver.IsResolvable(key) || _parent.IsResolvable(key);
 		}
 
 		protected override TContract DoResolve<TContract>(BindingKey key)
 		{
-			if (base.IsResolvable(key))
-				return base.DoResolve<TContract>(key);
+			if (_baseResolver.IsResolvable(key))
+				return _baseResolver.Resolve<TContract>(key);
 			return _parent.Resolve<TContract>(key);
 		}
 	}
