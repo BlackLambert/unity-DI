@@ -15,7 +15,7 @@ namespace SBaier.DI
 
         public void NonLazy()
 		{
-            _arguments.BindingStorage.AddNonLazy(_binding);
+            _arguments.BindingStorage.AddToNonLazy(_binding);
         }
     }
 }

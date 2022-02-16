@@ -5,9 +5,9 @@ namespace SBaier.DI
 {
 	public class DIContainerBinder : Binder
 	{
-		private DIContainer _container;
+		private DIContainers _container;
 
-		public DIContainerBinder(DIContainer container)
+		public DIContainerBinder(DIContainers container)
 		{
 			_container = container;
 		}

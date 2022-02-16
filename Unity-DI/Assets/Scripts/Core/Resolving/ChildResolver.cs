@@ -1,12 +1,10 @@
-using UnityEngine;
-
 namespace SBaier.DI
 {
     public class ChildResolver : DIContainerResolver
 	{
 		private readonly Resolver _parent;
 
-		public ChildResolver(Resolver parent, DIContainer dIContainer, DIContext context) : base(dIContainer, context)
+		public ChildResolver(Resolver parent, BindingsContainer container, DIContext context) : base(container, context)
 		{
 			_parent = parent;
 		}

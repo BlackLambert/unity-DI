@@ -2,10 +2,10 @@ namespace SBaier.DI
 {
 	public class DIContainerResolver : ResolverBase
 	{
-		private DIContainer _container;
+		private BindingsContainer _container;
 		private DIContext _diContext;
 
-		public DIContainerResolver(DIContainer container,
+		public DIContainerResolver(BindingsContainer container,
 			DIContext diContext)
 		{
 			_container = container;

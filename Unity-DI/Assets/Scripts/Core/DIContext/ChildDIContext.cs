@@ -10,7 +10,7 @@ namespace SBaier.DI
 			_baseContext = resolver.Resolve<DIContext>();
 		}
 
-		protected override Resolver CreateResolver(DIContainer container, DIContext diContext)
+		protected override Resolver CreateResolver(BindingsContainer container, DIContext diContext)
 		{
 			Resolver containerResolver = new ChildResolver(_baseContext.GetResolver(), container, diContext);
 			return new CircularDependencyDetector(containerResolver);

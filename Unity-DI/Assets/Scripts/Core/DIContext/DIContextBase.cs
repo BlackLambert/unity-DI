@@ -6,7 +6,7 @@ namespace SBaier.DI
 {
     public abstract class DIContextBase : DIContext, Injectable
     {
-        private DIContainer _container;
+        private DIContainers _container;
         private DIInstanceFactory _instanceFactory;
         private BindingValidator _bindingValidator;
         private GameObjectInjector _gameObjectInjector;
@@ -14,16 +14,20 @@ namespace SBaier.DI
         private Resolver _dIContainerResolver;
         private Binder _dIContainerBinder;
 
+        private BindingsContainer _bindings => _container.Bindings;
+        private NonLazyContainer _nonLazyBindings => _container.NonLazyBindings;
+        private SingleInstancesContainer _singleInstances => _container.SingleInstances;
+
         void Injectable.Inject(Resolver resolver)
         {
             DoInjection(resolver);
-            _dIContainerResolver = CreateResolver(_container, this);
+            _dIContainerResolver = CreateResolver(_bindings, this);
             _dIContainerBinder = new DIContainerBinder(_container);
         }
 
         protected virtual void DoInjection(Resolver resolver)
         {
-            _container = resolver.Resolve<DIContainer>();
+            _container = resolver.Resolve<DIContainers>();
             _instanceFactory = resolver.Resolve<DIInstanceFactory>();
             _bindingValidator = resolver.Resolve<BindingValidator>();
             _gameObjectInjector = resolver.Resolve<GameObjectInjector>();
@@ -31,14 +35,14 @@ namespace SBaier.DI
 
         public void ValidateBindings()
 		{
-            IEnumerable<Binding> bindings = _container.GetBindings();
+            IEnumerable<Binding> bindings = _bindings.GetBindings();
             foreach (Binding binding in bindings)
                 _bindingValidator.Validate(binding);
         }
 
         public void CreateNonLazyInstances()
         {
-            foreach(Binding binding in new List<Binding>(_container.NonLazyBindings))
+            foreach(Binding binding in _nonLazyBindings.GetCopy())
                 CreateNonLazyInstance(binding);
         }
 
@@ -54,7 +58,7 @@ namespace SBaier.DI
 
         public TContract GetInstance<TContract>(Binding binding)
         {
-            _container.RemoveFromNonLazy(binding);
+            _nonLazyBindings.TryRemoving(binding);
             return binding.AmountMode switch
             {
                 InstanceAmountMode.Single => ResolveSingleInstance<TContract>(binding),
@@ -66,15 +70,15 @@ namespace SBaier.DI
 
         private TContract ResolveSingleInstance<TContract>(Binding binding)
         {
-            if (_container.HasSingleInstanceOf(binding))
-                return _container.GetSingleInstance<TContract>(binding);
+            if (_singleInstances.Has(binding))
+                return _singleInstances.Get<TContract>(binding);
             return CreateSingleInstance<TContract>(binding);
         }
 
         private TContract CreateSingleInstance<TContract>(Binding binding)
         {
             TContract instance = CreateInstance<TContract>(binding);
-            _container.StoreSingleInstance(binding, instance);
+            _singleInstances.Store(binding, instance);
             return instance;
         }
 
@@ -87,19 +91,14 @@ namespace SBaier.DI
 
         private void CreateNonLazyInstance(Binding binding)
 		{
-            if (!_container.NonLazyBindings.Contains(binding))
+            if (!_nonLazyBindings.Has(binding))
                 return;
             if(binding.IsUnityComponent)
                 CreateInstance<Component>(binding);
             else
                 CreateInstance<object>(binding);
-            _container.RemoveFromNonLazy(binding);
+            _nonLazyBindings.TryRemoving(binding);
         }
-
-        protected bool HasBinding(BindingKey key)
-		{
-            return _container.HasBinding(key);
-		}
 
         private void TryInjection<TContract>(TContract instance, Binding binding)
         {
@@ -143,7 +142,7 @@ namespace SBaier.DI
             return result;
         }
 
-        protected abstract Resolver CreateResolver(DIContainer container, DIContext diContext);
+        protected abstract Resolver CreateResolver(BindingsContainer container, DIContext diContext);
     }
 }
 
