@@ -9,8 +9,8 @@ namespace SBaier.DI.Examples.CircularDependencyInjection
 
 		public override void InstallBindings(Binder binder)
 		{
-			binder.BindToNewSelf<Foo>().AsSingle().NonLazy();
-			binder.BindToNewSelf<Bar>().AsSingle().NonLazy();
+			binder.BindToNewSelf<Foo>();
+			binder.BindToNewSelf<Bar>();
 			binder.BindComponent<Baz>().FromNewPrefabInstance(_bazPrefab).AsSingle().NonLazy();
 		}
 	}

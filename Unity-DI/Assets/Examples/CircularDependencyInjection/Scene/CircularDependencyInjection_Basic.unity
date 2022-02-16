@@ -216,8 +216,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1060206398}
-  - component: {fileID: 1060206397}
   - component: {fileID: 1060206399}
+  - component: {fileID: 1060206397}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
