@@ -50,5 +50,10 @@ namespace SBaier.DI
 		{
             return Bind<TContract>().ToComponent<TContract>();
 		}
+
+		public ToObjectBindingContext<TContract> BindObject<TContract>(IComparable iD = null) where TContract : UnityEngine.Object
+		{
+            return Bind<TContract>().ToObject<TContract>();
+		}
 	}
 }

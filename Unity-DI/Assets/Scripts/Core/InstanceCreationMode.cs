@@ -9,6 +9,9 @@ namespace SBaier.DI
         FromMethod = 4,
         FromFactory = 8,
         FromPrefabInstance = 16,
-        FromRessourcePrefabInstance = 32,
-    }
+        FromResourcePrefabInstance = 32,
+		FromNewComponentOn = 64,
+		FromNewComponentOnNewGameObject = 128,
+		FromResources = 256,
+	}
 }

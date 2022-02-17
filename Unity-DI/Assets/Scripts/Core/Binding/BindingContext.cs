@@ -59,5 +59,10 @@ namespace SBaier.DI
         {
             return new ToComponentBindingContext<TConcrete>(_arguments);
         }
+
+        public ToObjectBindingContext<TConcrete> ToObject<TConcrete>() where TConcrete : UnityEngine.Object, C1, C2, C3, C4, C5, C6, C7, C8
+        {
+            return new ToObjectBindingContext<TConcrete>(_arguments);
+        }
     }
 }

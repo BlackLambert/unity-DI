@@ -9,6 +9,7 @@ namespace SBaier.DI.Examples
 		public override void InstallBindings(Binder binder)
 		{
 			binder.BindToSelf<Camera>().FromInstanceAsSingle(_camera);
+			binder.Bind<Sprite>().ToObject<Sprite>().FromResources("Sprites/Planet").AsSingle().NonLazy();
 		}
 	}
 }

@@ -16,7 +16,10 @@ namespace SBaier.DI
         private SceneInjector _injector;
         private Scene _scene;
         private SceneContextProvider _sceneContextProvider;
-        
+
+        private bool HasID => !string.IsNullOrEmpty(_iD);
+
+
         protected override void DoInit(Resolver resolver)
 		{
             _dIContext = CreateDIContext(resolver);
@@ -32,13 +35,13 @@ namespace SBaier.DI
 
         private void AddToProvider()
 		{
-            if(!string.IsNullOrEmpty(_iD))
+            if(HasID)
 			    _sceneContextProvider.Add(_iD, this);
 		}
 
 		private void RemoveFromProvider()
 		{
-            if(!string.IsNullOrEmpty(_iD))
+            if(HasID)
 			    _sceneContextProvider.Remove(_iD);
 		}
 

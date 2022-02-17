@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,7 +40,7 @@ namespace SBaier.DI
             if (count <= 0)
                 Debug.LogWarning($"There is no SceneContext present within scene {scene.name}. " +
                     $"DIContexts of this scene won't be initialized.");
-            if (count > 1)
+            else if (count > 1)
                 throw new MultipleSceneContextsException(scene.name);
 		}
 

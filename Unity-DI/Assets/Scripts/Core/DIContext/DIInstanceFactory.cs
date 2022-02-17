@@ -12,12 +12,14 @@ namespace  SBaier.DI
                 case InstanceCreationMode.FromNew:
                 case InstanceCreationMode.FromMethod:
                 case InstanceCreationMode.FromInstance:
+                case InstanceCreationMode.FromNewComponentOn:
+                case InstanceCreationMode.FromResources:
                     return (TInstance) binding.CreateInstanceFunction();
                 case InstanceCreationMode.FromFactory:
                     return CreateByFactory<TInstance>(resolver);
                 case InstanceCreationMode.FromPrefabInstance:
                     return CreatePrefabInstance<TInstance>(binding);
-                case InstanceCreationMode.FromRessourcePrefabInstance:
+                case InstanceCreationMode.FromResourcePrefabInstance:
                     return CreatePrefabInstanceFromRessources<TInstance>(binding);
                 case InstanceCreationMode.Undefined:
                     throw new ArgumentException($"Creation of {typeof(TInstance)} failed. " +

@@ -16,7 +16,9 @@ namespace SBaier.DI
                 case InstanceCreationMode.FromMethod:
                 case InstanceCreationMode.FromNew:
                 case InstanceCreationMode.FromPrefabInstance:
-                case InstanceCreationMode.FromRessourcePrefabInstance:
+                case InstanceCreationMode.FromResourcePrefabInstance:
+                case InstanceCreationMode.FromResources:
+                case InstanceCreationMode.FromNewComponentOnNewGameObject:
                     break;
                 default:
                     throw new NotImplementedException();

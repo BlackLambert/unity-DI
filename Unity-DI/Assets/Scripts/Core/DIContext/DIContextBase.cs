@@ -93,10 +93,7 @@ namespace SBaier.DI
 		{
             if (!_nonLazyBindings.Has(binding))
                 return;
-            if(binding.IsUnityComponent)
-                CreateInstance<Component>(binding);
-            else
-                CreateInstance<object>(binding);
+            CreateInstance<object>(binding);
             _nonLazyBindings.TryRemoving(binding);
         }
 

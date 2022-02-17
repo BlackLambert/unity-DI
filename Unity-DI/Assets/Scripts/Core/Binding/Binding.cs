@@ -10,7 +10,6 @@ namespace SBaier.DI
         public InstanceAmountMode AmountMode;
         public Func<object> CreateInstanceFunction;
         public bool InjectionAllowed;
-        public bool IsUnityComponent;
         public Dictionary<BindingKey, object> Arguments { get; } =
             new Dictionary<BindingKey, object>();
 
@@ -21,7 +20,6 @@ namespace SBaier.DI
             AmountMode = InstanceAmountMode.PerRequest;
             CreateInstanceFunction = null;
             InjectionAllowed = true;
-            IsUnityComponent = false;
         }
 
 		public override string ToString()
@@ -32,7 +30,6 @@ namespace SBaier.DI
                 $"CreateInstanceFunction: {CreateInstanceFunction} | " +
                 $"AmountMode: {AmountMode} | " +
                 $"InjectionAllowed: {InjectionAllowed})" +
-                $"IsUnityComponent: {IsUnityComponent})" +
                 $"Arguments: {Arguments}";
 		}
 	}
