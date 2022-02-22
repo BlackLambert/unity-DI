@@ -5,10 +5,11 @@ namespace SBaier.DI
     public class AppContext : MonoContext
     {
         private BasicDIContext _dIContext;
-        public override DIContext DIContext => _dIContext;
+        protected override DIContext DIContext => _dIContext;
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             Init(new Bootstrapper().Resolver);
         }
 
@@ -21,7 +22,7 @@ namespace SBaier.DI
 
         private void InstallSceneContextBindings()
         {
-            AppContextInstaller installer = new AppContextInstaller(_dIContext);
+            AppContextInstaller installer = new AppContextInstaller(_dIContext, gameObject);
             installer.InstallBindings(_binder);
         }
 
@@ -31,6 +32,11 @@ namespace SBaier.DI
             if (sceneContext == null)
                 throw new MissingSceneContextException();
             sceneContext.Init(_resolver);
+        }
+
+		protected override ContextAlreadyInitializedException CreateContextAlreadyInitializedException()
+		{
+            return new AppContextAlreadyInitializedException(name);
         }
 	}
 }
