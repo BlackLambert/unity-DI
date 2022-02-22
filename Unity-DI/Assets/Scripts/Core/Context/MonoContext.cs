@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ namespace SBaier.DI
         private ScriptableObjectInstaller[] _scriptableObjectInstallers = new ScriptableObjectInstaller[0];
 
         private List<Installer> _installers = new List<Installer>();
-        public abstract DIContext DIContext { get; }
+        protected abstract DIContext DIContext { get; }
+        public bool Initialized { get; private set; } = false;
 
         protected Resolver _resolver => DIContext.GetResolver();
         protected Binder _binder => DIContext.GetBinder();
@@ -21,6 +23,8 @@ namespace SBaier.DI
 
         public virtual void Init(Resolver baseResolver)
         {
+            ValidateInitCall();
+            Initialized = true;
             DoInit(baseResolver);
             InjectIntoInstallers();
             InstallBindings(baseResolver);
@@ -64,6 +68,14 @@ namespace SBaier.DI
             foreach (Installer installer in installers)
                 (installer as Injectable)?.Inject(_resolver);
         }
+
+        private void ValidateInitCall()
+        {
+            if (Initialized)
+                throw CreateContextAlreadyInitializedException();
+        }
+
+        protected abstract ContextAlreadyInitializedException CreateContextAlreadyInitializedException();
     }
 }
 

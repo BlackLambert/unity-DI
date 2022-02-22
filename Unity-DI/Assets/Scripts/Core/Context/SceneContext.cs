@@ -6,7 +6,7 @@ namespace SBaier.DI
     public class SceneContext : MonoContext
     {
         private ChildDIContext _dIContext;
-        public override DIContext DIContext => _dIContext;
+        protected override DIContext DIContext => _dIContext;
 
         [SerializeField]
         private string _iD = string.Empty;
@@ -76,6 +76,11 @@ namespace SBaier.DI
         protected override void DoInjection()
         {
             _injector.InjectIntoRootObjectsOf(_scene, _resolver);
+        }
+
+        protected override ContextAlreadyInitializedException CreateContextAlreadyInitializedException()
+        {
+            return new SceneContextAlreadyInitializedException(name);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SBaier.DI
     {
         private ChildDIContext _currentContext;
         private GameObjectInjector _injector;
-        public override DIContext DIContext => _currentContext;
+        protected override DIContext DIContext => _currentContext;
         
         protected override void DoInit(Resolver resolver)
         {
@@ -20,6 +20,11 @@ namespace SBaier.DI
         {
             Debug.Log($"{name} injecting into hierarchy");
             _injector.InjectIntoHierarchy(transform, DIContext.GetResolver());
+        }
+
+        protected override ContextAlreadyInitializedException CreateContextAlreadyInitializedException()
+        {
+            return new GameObjectContextAlreadyInitializedException(name);
         }
     }
 }
