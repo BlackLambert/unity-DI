@@ -8,25 +8,51 @@ namespace SBaier.DI
         private const string alreadyAddedExceptionMessage = "The scene with iD {0} has already been added to the provider.";
         private const string notAddedExceptionMessage = "The scene with iD {0} has not been added to the provider. Therefore removing it is not possible";
         private const string getExceptionMessage = "The scene with iD {0} has not been added to the provider. Therefore getting it is not possible";
+        private const string activeSceneDependenciesExceptionMessage = "The scene with iD {0} is parent to another scene. Unload dependant scenes before removing.";
 
         private Dictionary<string, SceneContext> _sceneContexts = new Dictionary<string, SceneContext>();
+        private Dictionary<string, int> _sceneToDependencyAmount = new Dictionary<string, int>();
 
-        public void Add(string iD, SceneContext context)
+        public void Add(SceneContext context)
         {
-            ValidateAdd(iD);
-            _sceneContexts[iD] = context;
+            if (string.IsNullOrEmpty(context.ID))
+                return;
+            ValidateAdd(context.ID);
+            _sceneContexts[context.ID] = context;
+            AddParentDependency(context);
         }
 
-        public void Remove(string iD)
+		public void Remove(SceneContext context)
         {
-            ValidateRemove(iD);
-            _sceneContexts.Remove(iD);
+            if (string.IsNullOrEmpty(context.ID))
+                return;
+            ValidateRemove(context.ID);
+            _sceneContexts.Remove(context.ID);
+            RemoveParentDependency(context);
         }
 
 		public SceneContext Get(string iD)
         {
             ValidateGet(iD);
             return _sceneContexts[iD];
+        }
+
+        private void AddParentDependency(SceneContext context)
+        {
+            string parentContextID = context.ParentContextID;
+            if (string.IsNullOrEmpty(parentContextID))
+                return;
+            if (!_sceneToDependencyAmount.ContainsKey(parentContextID))
+                _sceneToDependencyAmount.Add(parentContextID, 0);
+            _sceneToDependencyAmount[parentContextID]++;
+        }
+
+        private void RemoveParentDependency(SceneContext context)
+        {
+            string parentContextID = context.ParentContextID;
+            if (string.IsNullOrEmpty(parentContextID))
+                return;
+            _sceneToDependencyAmount[parentContextID]--;
         }
 
         private void ValidateAdd(string iD)
@@ -39,6 +65,9 @@ namespace SBaier.DI
         {
             if (!_sceneContexts.ContainsKey(iD))
                 throw new AlreadyAddedException(iD);
+            if (_sceneToDependencyAmount.ContainsKey(iD) &&
+                _sceneToDependencyAmount[iD] > 0)
+                throw new ActiveSceneDependenciesException(iD);
         }
 
         private void ValidateGet(string iD)
@@ -60,6 +89,11 @@ namespace SBaier.DI
         public class GetException : Exception
         {
             public GetException(string iD) : base(string.Format(getExceptionMessage, iD)) { }
+        }
+
+        public class ActiveSceneDependenciesException : Exception
+        {
+            public ActiveSceneDependenciesException(string iD) : base(string.Format(activeSceneDependenciesExceptionMessage, iD)) { }
         }
     }
 }

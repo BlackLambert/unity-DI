@@ -21,7 +21,7 @@ namespace SBaier.DI
             binder.BindToNewSelf<DIInstanceFactory>();
             binder.BindToSelf<DIContainers>().FromFactory();
             binder.Bind<Factory<DIContainers>>().ToNew<DIContainersFactory>();
-            binder.BindComponent<SceneLoader>().FromNewComponentOn(_contextObject).AsSingle();
+            binder.CreateNonResolvableInstance().OfComponent<LoadedSceneInitializer>().FromNewComponentOn(_contextObject).AsSingle().NonLazy();
             binder.BindToNewSelf<SceneContextProvider>().AsSingle();
             binder.Bind<Factory<ChildDIContext, DIContext>>().ToNew<ChildDIContextFactory>();
             new BindingValidationInstaller().InstallBindings(binder);

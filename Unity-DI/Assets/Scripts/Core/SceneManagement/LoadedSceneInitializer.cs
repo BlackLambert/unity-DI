@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace SBaier.DI
 {
-    public class SceneLoader : MonoBehaviour, Injectable
+    public class LoadedSceneInitializer : MonoBehaviour, Injectable
     {
 		private DIContext _context;
 
@@ -17,16 +17,6 @@ namespace SBaier.DI
 		private void OnDestroy()
 		{
             SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-
-		public void Load(string sceneName, LoadSceneParameters parameter)
-		{
-            SceneManager.LoadScene(sceneName, parameter);
-        }
-
-        public AsyncOperation Unload(string sceneName)
-        {
-            return SceneManager.UnloadSceneAsync(sceneName);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

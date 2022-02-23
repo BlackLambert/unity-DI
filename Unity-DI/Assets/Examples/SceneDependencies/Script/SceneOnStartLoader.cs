@@ -1,26 +1,18 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SBaier.DI.Examples.SceneDependencies
 {
-    public class SceneOnStartLoader : MonoBehaviour, Injectable
+    public class SceneOnStartLoader : MonoBehaviour
     {
 		[SerializeField]
 		private SceneName _sceneName;
 		[SerializeField]
-		private UnityEngine.SceneManagement.LoadSceneMode _loadMode = UnityEngine.SceneManagement.LoadSceneMode.Additive;
-
-		private SceneLoader _sceneLoader;
-
-		public void Inject(Resolver resolver)
-		{
-			_sceneLoader = resolver.Resolve<SceneLoader>();
-		}
+		private LoadSceneMode _loadMode = LoadSceneMode.Additive;
 
 		private void Start()
 		{
-			UnityEngine.SceneManagement.LoadSceneParameters paramerters =
-				new UnityEngine.SceneManagement.LoadSceneParameters(_loadMode);
-			_sceneLoader.Load(_sceneName.ToString(), paramerters);
+			SceneManager.LoadScene(_sceneName.ToString(), _loadMode);
 		}
 	}
 }

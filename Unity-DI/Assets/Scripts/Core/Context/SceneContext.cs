@@ -17,7 +17,8 @@ namespace SBaier.DI
         private Scene _scene;
         private SceneContextProvider _sceneContextProvider;
 
-        private bool HasID => !string.IsNullOrEmpty(_iD);
+        public string ID => _iD;
+        public string ParentContextID => _parentContextID;
 
 
         protected override void DoInit(Resolver resolver)
@@ -35,14 +36,12 @@ namespace SBaier.DI
 
         private void AddToProvider()
 		{
-            if(HasID)
-			    _sceneContextProvider.Add(_iD, this);
+			_sceneContextProvider.Add(this);
 		}
 
 		private void RemoveFromProvider()
 		{
-            if(HasID)
-			    _sceneContextProvider.Remove(_iD);
+			_sceneContextProvider.Remove(this);
 		}
 
         private ChildDIContext CreateDIContext(Resolver resolver)
