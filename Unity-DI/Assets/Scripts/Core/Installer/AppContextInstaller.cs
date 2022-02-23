@@ -25,6 +25,7 @@ namespace SBaier.DI
             binder.BindToNewSelf<SceneContextProvider>().AsSingle();
             binder.Bind<Factory<ChildDIContext, DIContext>>().ToNew<ChildDIContextFactory>();
             new BindingValidationInstaller().InstallBindings(binder);
+            new QuitDetectorInstaller(_contextObject).InstallBindings(binder);
         }
     }
 }

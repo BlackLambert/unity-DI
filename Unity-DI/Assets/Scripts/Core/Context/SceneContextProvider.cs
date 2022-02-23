@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SBaier.DI
 {
-    public class SceneContextProvider
+    public class SceneContextProvider: Injectable
     {
         private const string alreadyAddedExceptionMessage = "The scene with iD {0} has already been added to the provider.";
         private const string notAddedExceptionMessage = "The scene with iD {0} has not been added to the provider. Therefore removing it is not possible";
@@ -12,6 +13,15 @@ namespace SBaier.DI
 
         private Dictionary<string, SceneContext> _sceneContexts = new Dictionary<string, SceneContext>();
         private Dictionary<string, int> _sceneToDependencyAmount = new Dictionary<string, int>();
+
+        private QuitDetector _quitDetector;
+
+        private bool IsAppQuitting => _quitDetector.ApplicationIsQuitting;
+
+        public void Inject(Resolver resolver)
+        {
+            _quitDetector = resolver.Resolve<QuitDetector>();
+        }
 
         public void Add(SceneContext context)
         {
@@ -65,9 +75,14 @@ namespace SBaier.DI
         {
             if (!_sceneContexts.ContainsKey(iD))
                 throw new AlreadyAddedException(iD);
-            if (_sceneToDependencyAmount.ContainsKey(iD) &&
-                _sceneToDependencyAmount[iD] > 0)
+            if (!IsAppQuitting && IsDependantSceneContext(iD))
                 throw new ActiveSceneDependenciesException(iD);
+        }
+
+        private bool IsDependantSceneContext(string iD)
+		{
+            return _sceneToDependencyAmount.ContainsKey(iD) &&
+                _sceneToDependencyAmount[iD] > 0;
         }
 
         private void ValidateGet(string iD)
@@ -76,7 +91,7 @@ namespace SBaier.DI
                 throw new GetException(iD);
         }
 
-        public class AlreadyAddedException : Exception
+		public class AlreadyAddedException : Exception
         {
             public AlreadyAddedException(string iD) : base(string.Format(alreadyAddedExceptionMessage, iD)) { }
         }
